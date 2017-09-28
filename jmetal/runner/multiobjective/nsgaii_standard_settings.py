@@ -25,12 +25,14 @@ def main() -> None:
         max_evaluations=25000,
         mutation=Polynomial(1.0/problem.number_of_variables, distribution_index=20),
         crossover=SBX(1.0, distribution_index=20),
-        #selection=BinaryTournamentSelection(RankingAndCrowdingDistanceComparator()))
-        selection = BinaryTournament2([SolutionAttributeComparator("dominance_ranking"),
-                                   SolutionAttributeComparator("crowding_distance", lowest_is_best=False)]))
+        selection=BinaryTournamentSelection(RankingAndCrowdingDistanceComparator()))
+        #selection = BinaryTournament2([SolutionAttributeComparator("dominance_ranking"), SolutionAttributeComparator("crowding_distance", lowest_is_best=False)]))
 
     algorithm.run()
     result = algorithm.get_result()
+
+    setattr(result, "value", 4) ;
+    print("solution aatr: " + str(getattr(result,  "value")))
 
     SolutionListOutput[FloatSolution].print_function_values_to_file("FUN."+problem.get_name(), result)
 
