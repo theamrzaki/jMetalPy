@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 S = TypeVar('S')
 
-class Population(List[S]):
+class Population(Generic[S]):
     def __init__(self, list: List[S] = []):
         for value in list:
             self.append(value)

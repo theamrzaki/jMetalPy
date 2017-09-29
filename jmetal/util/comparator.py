@@ -5,9 +5,25 @@ from typing import TypeVar, Generic, List
 S = TypeVar('S')
 
 
-class Comparator():
+class Comparator(Generic[S]):
     def compare(self, object1: S, object2: S) -> int:
         pass
+
+
+class MultiComparator(Comparator[S]) :
+    def __init__(self, comparator_list):
+        self.comparator_list = comparator_list
+
+    def compare(self, solution1: Solution, solution2: Solution) -> int:
+        result: int = 0
+        for comparator in self.comparator_list:
+            result = comparator.compare(solution1, solution2)
+            if result is 0:
+                continue
+            else:
+                return result
+
+        return result
 
 
 class EqualSolutionsComparator():

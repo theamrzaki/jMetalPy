@@ -23,7 +23,7 @@ class PopulationCreation(Generic[S]):
         self.problem = problem
         self.population_size = population_size
 
-    def create(self) -> Population[S]:
+    def apply(self) -> Population[S]:
         pass
 
 
