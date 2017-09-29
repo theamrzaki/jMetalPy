@@ -7,8 +7,12 @@ from jmetal.core.algorithm import Algorithm
 from jmetal.core.problem import Problem
 from jmetal.core.solution import FloatSolution
 from jmetal.component.evaluator import Evaluator, SequentialEvaluator
+from jmetal.paula.evaluation import Evaluation
+from jmetal.paula.matingpool import MatingPool
 from jmetal.paula.populationcreation import PopulationCreation
 from jmetal.paula.population import Population
+from jmetal.paula.replacement import Replacement
+from jmetal.paula.variation import Variation
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -19,11 +23,11 @@ R = TypeVar('R')
 class EvolutionaryAlgorithm(Generic[S, R]):
     def __init__(self,
                  problem: Problem[S],
-                 population_creation : PopulationCreation,
-                 evaluation,
-                 mating_pool,
-                 variation,
-                 replacement):
+                 population_creation : PopulationCreation[S],
+                 evaluation: Evaluation[S],
+                 mating_pool: MatingPool[S],
+                 variation: Variation[S],
+                 replacement: Replacement[S]):
         super(EvolutionaryAlgorithm,self).__init__()
         self.problem = problem
         self.population_creation = population_creation
@@ -62,13 +66,13 @@ class EvolutionaryAlgorithm(Generic[S, R]):
         self.start_computing_time = time.time()
 
         self.population = self.population_creation.create() # Step One
-        self.population = self.evaluation.evaluate(self.population) # Step Two
+        self.population = self.evaluation.apply(self.population) # Step Two
         self.init_progress()
 
         while not self.is_stopping_condition_reached(): # Step Three
             mating_population = self.mating_pool.apply(self.population) # Step Three.1
             offspring_population = self.variation.apply(mating_population) # Step Three.2
-            offspring_population = self.evaluation.evaluate(offspring_population) # Step Three.3
+            offspring_population = self.evaluation.apply(offspring_population) # Step Three.3
             self.population = self.replacement.apply(self.population, offspring_population) # Step Three.4
             self.update_progress()
 
