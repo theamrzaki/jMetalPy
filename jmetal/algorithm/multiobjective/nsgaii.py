@@ -1,7 +1,7 @@
 from typing import TypeVar, List
 
 from jmetal.algorithm.singleobjective.evolutionaryalgorithm import GenerationalGeneticAlgorithm
-from jmetal.component.evaluator import SequentialEvaluator, Evaluator
+from jmetal.component.evaluator import SequentialEvaluator, Evaluator, DaskParallelEvaluator
 from jmetal.core.operator import Mutation, Crossover, Selection
 from jmetal.core.problem import Problem
 from jmetal.operator.selection import RankingAndCrowdingDistanceSelection
@@ -20,7 +20,7 @@ class NSGAII(GenerationalGeneticAlgorithm[S, R]):
                  crossover: Crossover[S, S],
                  selection: Selection[List[S], S],
                  observable: Observable = DefaultObservable(),
-                 evaluator: Evaluator[S] = SequentialEvaluator[S]()):
+                 evaluator: Evaluator[S] = DaskParallelEvaluator[S]()):
         super(NSGAII, self).__init__(
             problem,
             population_size,

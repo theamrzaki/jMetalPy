@@ -1,4 +1,5 @@
 from multiprocessing.pool import ThreadPool
+import dask.multiprocessing
 from typing import TypeVar, List, Generic
 
 from jmetal.core.problem import Problem
@@ -33,3 +34,13 @@ class ParallelEvaluator(Evaluator[S]):
         self.pool.map(lambda solution: Evaluator[S].evaluate_solution(solution, problem), solution_list)
 
         return solution_list
+
+
+class DaskParallelEvaluator(Evaluator[S]):
+    def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
+        output = []
+        for solution in solution_list:
+            solution = dask.delayed(Evaluator[S].evaluate_solution)(solution, problem)
+            output.append(solution)
+
+        return dask.compute(*output)
