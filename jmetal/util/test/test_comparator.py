@@ -6,7 +6,6 @@ from jmetal.util.comparator import DominanceComparator, SolutionAttributeCompara
 
 
 class DominanceComparatorTestCases(unittest.TestCase):
-
     def setUp(self):
         self.comparator = DominanceComparator()
 
@@ -144,9 +143,7 @@ class DominanceComparatorTestCases(unittest.TestCase):
         self.assertEqual(1, self.comparator.compare(solution1, solution2))
 
 
-
 class SolutionAttributeComparatorTestCases(unittest.TestCase):
-
     def setUp(self):
         self.comparator = SolutionAttributeComparator("attribute")
 
@@ -226,7 +223,6 @@ class SolutionAttributeComparatorTestCases(unittest.TestCase):
 
 
 class RankingAndCrowdingComparatorTestCases(unittest.TestCase):
-
     def setUp(self):
         self.comparator = RankingAndCrowdingDistanceComparator()
 
@@ -297,4 +293,3 @@ class RankingAndCrowdingComparatorTestCases(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

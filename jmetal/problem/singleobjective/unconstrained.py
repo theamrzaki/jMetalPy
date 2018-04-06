@@ -10,6 +10,7 @@ class OneMax(BinaryProblem):
     """ Class representing problem Kursawe """
 
     def __init__(self, number_of_bits: int = 256):
+        super().__init__()
         self.number_of_bits = number_of_bits
         self.number_of_objectives = 1
         self.number_of_variables = 1
@@ -35,6 +36,7 @@ class OneMax(BinaryProblem):
 
 class Sphere(FloatProblem):
     def __init__(self, number_of_variables: int = 10):
+        super().__init__()
         self.number_of_objectives = 1
         self.number_of_variables = number_of_variables
         self.number_of_constraints = 0

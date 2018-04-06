@@ -19,8 +19,7 @@ S = TypeVar('S')
 """
 
 
-class ScatterPlot():
-
+class ScatterPlot:
     def __init__(self, plot_title: str, animation_speed: float = 1*10e-10):
         """ Creates a new :class:`ScatterPlot` instance.
         Args:

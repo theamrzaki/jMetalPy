@@ -9,15 +9,17 @@ from jmetal.core.problem import FloatProblem
 
 class Srinivas(FloatProblem):
     """ Class representing problem Srinivas """
+
     def __init__(self):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_objectives = len(self.objectives)
         self.number_of_variables = 2
         self.number_of_constraints = 2
 
-        self.lower_bound = [-20.0 for i in range(self.number_of_variables)]
-        self.upper_bound = [20.0 for i in range(self.number_of_variables)]
+        self.lower_bound = [-20.0 for _ in range(self.number_of_variables)]
+        self.upper_bound = [20.0 for _ in range(self.number_of_variables)]
 
         FloatSolution.lower_bound = self.lower_bound
         FloatSolution.upper_bound = self.upper_bound
@@ -62,15 +64,17 @@ class Srinivas(FloatProblem):
 
 class Tanaka(FloatProblem):
     """ Class representing problem Tanaka """
+
     def __init__(self):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_objectives = len(self.objectives)
         self.number_of_variables = 2
         self.number_of_constraints = 2
 
-        self.lower_bound = [10e-5 for i in range(self.number_of_variables)]
-        self.upper_bound = [pi for i in range(self.number_of_variables)]
+        self.lower_bound = [10e-5 for _ in range(self.number_of_variables)]
+        self.upper_bound = [pi for _ in range(self.number_of_variables)]
 
         FloatSolution.lower_bound = self.lower_bound
         FloatSolution.upper_bound = self.upper_bound
@@ -87,7 +91,7 @@ class Tanaka(FloatProblem):
             return solution.variables[1]
 
     def evaluate_constraints(self, solution: FloatSolution) -> None:
-        constraints : [float] = [0.0 for x in range(self.number_of_constraints)]
+        constraints : [float] = [0.0 for _ in range(self.number_of_constraints)]
 
         x1 = solution.variables[0]
         x2 = solution.variables[1]
@@ -105,4 +109,3 @@ class Tanaka(FloatProblem):
 
         solution.attributes["overall_constraint_violation"] = overall_constraint_violation
         solution.attributes["number_of_violated_constraints"] = number_of_violated_constraints
-

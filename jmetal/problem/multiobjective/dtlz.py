@@ -32,20 +32,17 @@ from jmetal.core.solution import FloatSolution
 
 class DTLZ1(FloatProblem):
     """ Problem DTLZ1
-
     .. note:: Unconstrained problem. The default number of variables and objectives are,
     respectively, 7 and 3.
-
     .. note:: Continuous problem having a convex Pareto front
-
     """
-    def __init__(self, number_of_variables: int = 30, number_of_objectives = 3):
+
+    def __init__(self, number_of_variables: int = 30, number_of_objectives=3):
         """Constructor
-
         Arguments:
-
         :param number_of_variables: number of decision variables of the problem
         """
+        super().__init__()
         self.objectives = [self.Dtlz1Objective() for i in range(number_of_objectives)]
 
         self.number_of_variables = number_of_variables
@@ -83,5 +80,3 @@ class DTLZ1(FloatProblem):
 
     def get_name(self):
         return "DTLZ1"
-
-

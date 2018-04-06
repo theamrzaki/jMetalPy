@@ -6,10 +6,6 @@ __author__ = "Antonio J. Nebro"
 
 
 class OneMaxTestCases(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
     def test_should_constructor_create_a_non_null_object(self) -> None:
         problem = OneMax()
         self.assertIsNotNone(problem)
@@ -53,10 +49,6 @@ class OneMaxTestCases(unittest.TestCase):
 
 
 class SphereTestCases(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
     def test_should_constructor_create_a_non_null_object(self):
         problem = Sphere(3)
         self.assertIsNotNone(problem)

@@ -49,6 +49,7 @@ class FloatProblem(Problem[FloatSolution]):
     """ Class representing float problems """
 
     def __init__(self):
+        super().__init__()
         self.lower_bound : [] = None
         self.upper_bound : [] = None
 
@@ -63,7 +64,9 @@ class FloatProblem(Problem[FloatSolution]):
 
 class IntegerProblem(Problem[IntegerSolution]):
     """ Class representing integer problems """
+    
     def __init__(self):
+        super().__init__()
         self.lower_bound : [] = None
         self.upper_bound : [] = None
 

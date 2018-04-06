@@ -47,9 +47,9 @@ class SBX(Crossover[FloatSolution, FloatSolution]):
                         else:
                             y1, y2 = value_x2, value_x1
 
-                        lowerBound, upperBound = parents[0].lower_bound[i], parents[1].upper_bound[i]
+                        lower_bound, upper_bound = parents[0].lower_bound[i], parents[1].upper_bound[i]
 
-                        beta = 1.0 + (2.0 * (y1 - lowerBound) / (y2 - y1))
+                        beta = 1.0 + (2.0 * (y1 - lower_bound) / (y2 - y1))
                         alpha = 2.0 - pow(beta, -(self.distribution_index + 1.0))
 
                         rand = random.random()
@@ -59,7 +59,7 @@ class SBX(Crossover[FloatSolution, FloatSolution]):
                             betaq = pow(1.0 / (2.0 - rand * alpha), 1.0 / (self.distribution_index + 1.0))
 
                         c1 = 0.5 * (y1 + y2 - betaq * (y2 - y1))
-                        beta = 1.0 + (2.0 * (upperBound - y2) / (y2 - y1))
+                        beta = 1.0 + (2.0 * (upper_bound - y2) / (y2 - y1))
                         alpha = 2.0 - pow(beta, -(self.distribution_index + 1.0))
 
                         if rand <= (1.0 / alpha):
@@ -69,14 +69,14 @@ class SBX(Crossover[FloatSolution, FloatSolution]):
 
                         c2 = 0.5 * (y1 + y2 + betaq * (y2 - y1))
 
-                        if c1 < lowerBound:
-                            c1 = lowerBound
-                        if c2 < lowerBound:
-                            c2 = lowerBound
-                        if c1 > upperBound:
-                            c1 = upperBound
-                        if c2 > upperBound:
-                            c2 = upperBound
+                        if c1 < lower_bound:
+                            c1 = lower_bound
+                        if c2 < lower_bound:
+                            c2 = lower_bound
+                        if c1 > upper_bound:
+                            c1 = upper_bound
+                        if c2 > upper_bound:
+                            c2 = upper_bound
 
                         if random.random() <= 0.5:
                             offspring[0].variables[i] = c2

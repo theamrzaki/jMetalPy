@@ -117,7 +117,6 @@ class BestSolutionSelectionTestCases(unittest.TestCase):
 
 
 class RandomSolutionSelectionTestCases(unittest.TestCase):
-
     def setUp(self):
         self.selection = RandomSolutionSelection[Solution]()
 
@@ -177,10 +176,6 @@ class RandomSolutionSelectionTestCases(unittest.TestCase):
 
 
 class NaryRandomSolutionSelectionTestCases(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
     def test_should_constructor_create_a_non_null_object(self):
         selection = NaryRandomSolutionSelection[Solution]()
         self.assertIsNotNone(selection)
@@ -283,7 +278,6 @@ class DominanceRankingTestCases(unittest.TestCase):
 
 
 class BinaryTournament2TestCases(unittest.TestCase):
-
     def test_should_constructor_create_a_non_null_object(self):
         selection = BinaryTournament2Selection[Solution]([])
 
@@ -318,7 +312,6 @@ class BinaryTournament2TestCases(unittest.TestCase):
 
         self.assertEqual(solution, selection.execute(solution_list))
 
-
     def test_should_execute_work_properly_case1(self):
         solution1 = Solution(3,2)
         solution1.objectives = [2, 3]
@@ -334,5 +327,7 @@ class BinaryTournament2TestCases(unittest.TestCase):
 
         self.assertTrue(1,  selection1.attributes["dominance_ranking"])
 
+
 if __name__ == '__main__':
     unittest.main()
+

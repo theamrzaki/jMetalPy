@@ -6,10 +6,6 @@ from jmetal.operator.crossover import Null, SinglePoint
 
 
 class NullCrossoverTestCases(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
     def test_should_constructor_create_a_non_null_object(self):
         solution = Null()
         self.assertIsNotNone(solution)
@@ -31,9 +27,6 @@ class NullCrossoverTestCases(unittest.TestCase):
 
 
 class SinglePointTestCases(unittest.TestCase):
-    def setUp(self):
-        pass
-
     def test_should_constructor_create_a_non_null_object(self):
         solution = SinglePoint(1.0)
         self.assertIsNotNone(solution)
@@ -120,6 +113,7 @@ class SinglePointTestCases(unittest.TestCase):
         self.assertEqual([False, True, False, False, True, True], offspring[1].variables[0])
         self.assertEqual([True, True, False, True, False, False], offspring[1].variables[1])
         self.assertEqual([True, False, True, True, True, True], offspring[1].variables[2])
+
 
 if __name__ == '__main__':
     unittest.main()

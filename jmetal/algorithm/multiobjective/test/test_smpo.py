@@ -40,12 +40,13 @@ class SMPSOTestCases(unittest.TestCase):
 
     class __DummyFloatProblem(Problem[FloatSolution]):
         def __init__(self):
+            super().__init__()
             self.number_of_variables = 2
             self.number_of_objectives = 2
             self.number_of_constraints = 0
 
-            self.lower_bound = [-2.0 for i in range(self.number_of_variables)]
-            self.upper_bound = [2.0 for i in range(self.number_of_variables)]
+            self.lower_bound = [-2.0 for _ in range(self.number_of_variables)]
+            self.upper_bound = [2.0 for _ in range(self.number_of_variables)]
 
             FloatSolution.lower_bound = self.lower_bound
             FloatSolution.upper_bound = self.upper_bound

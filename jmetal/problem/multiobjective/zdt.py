@@ -34,19 +34,16 @@ from jmetal.core.solution import FloatSolution
 
 class ZDT1(FloatProblem):
     """ Problem ZDT1
-
     .. note:: Bi-objective unconstrained problem. The default number of variables is 30.
-
     .. note:: Continuous problem having a convex Pareto front
-
     """
+
     def __init__(self, number_of_variables: int = 30):
         """Constructor
-
         Arguments:
-
         :param number_of_variables: number of decision variables of the problem
         """
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_variables = number_of_variables
@@ -89,13 +86,12 @@ class ZDT1(FloatProblem):
 
 class ZDT2(FloatProblem):
     """ Problem ZDT2
-
     .. note:: Bi-objective unconstrained problem. The default number of variables is 30.
-
     .. note:: Continuous problem having a non-convex Pareto front
-
     """
+
     def __init__(self, number_of_variables: int = 30):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_variables = number_of_variables
@@ -136,13 +132,12 @@ class ZDT2(FloatProblem):
 
 class ZDT3(FloatProblem):
     """ Problem ZDT3
-
     .. note:: Bi-objective unconstrained problem. The default number of variables is 30.
-
     .. note:: Continuous problem having a partitioned Pareto front
-
     """
+
     def __init__(self, number_of_variables: int = 30):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_variables = number_of_variables
@@ -183,13 +178,12 @@ class ZDT3(FloatProblem):
 
 class ZDT4(FloatProblem):
     """ Problem ZDT4
-
     .. note:: Bi-objective unconstrained problem. The default number of variables is 10.
-
     .. note:: Continuous multi-modal problem having a convex Pareto front
-
     """
+
     def __init__(self, number_of_variables: int = 10):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_variables = number_of_variables
@@ -234,13 +228,12 @@ class ZDT4(FloatProblem):
 
 class ZDT6(FloatProblem):
     """ Problem ZDT6
-
     .. note:: Bi-objective unconstrained problem. The default number of variables is 10.
-
     .. note:: Continuous problem having a non-convex Pareto front
-
     """
+
     def __init__(self, number_of_variables: int = 10):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_variables = number_of_variables

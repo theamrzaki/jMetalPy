@@ -5,7 +5,7 @@ from jmetal.core.solution import Solution
 S = TypeVar('S')
 
 
-class Comparator():
+class Comparator:
     def compare(self, object1: S, object2: S) -> int:
         pass
 
@@ -42,6 +42,7 @@ class EqualSolutionsComparator():
             return -1
         elif dominate2 == 1:
             return 1
+
 
 """
 class DominanceRankingComparator(Comparator):
@@ -92,7 +93,6 @@ class SolutionAttributeComparator():
 
 
 class RankingAndCrowdingDistanceComparator(Comparator):
-
     def compare(self, solution1: Solution, solution2: Solution) -> int:
         result = \
             SolutionAttributeComparator("dominance_ranking").compare(solution1, solution2)

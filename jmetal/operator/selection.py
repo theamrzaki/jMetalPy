@@ -13,7 +13,6 @@ S = TypeVar('S')
 
 class BinaryTournamentSelection(Selection[List[S], S]):
     def __init__(self, comparator: Comparator = DominanceComparator()):
-        super(BinaryTournamentSelection, self).__init__()
         self.comparator = comparator
 
     def execute(self, solution_list: List[S]) -> S:
@@ -45,9 +44,6 @@ class BinaryTournamentSelection(Selection[List[S], S]):
 
 
 class BestSolutionSelection(Selection[List[S], S]):
-    def __init__(self):
-        super(BestSolutionSelection, self).__init__()
-
     def execute(self, solution_list: List[S]) -> S:
         if solution_list is None:
             raise Exception("The solution list is null")
@@ -64,7 +60,6 @@ class BestSolutionSelection(Selection[List[S], S]):
 
 class NaryRandomSolutionSelection(Selection[List[S], S]):
     def __init__(self, number_of_solutions_to_be_returned:int = 1):
-        super(NaryRandomSolutionSelection, self).__init__()
         if number_of_solutions_to_be_returned < 0:
             raise Exception("The number of solutions to be returned must be positive integer")
 
@@ -83,9 +78,6 @@ class NaryRandomSolutionSelection(Selection[List[S], S]):
 
 
 class RandomSolutionSelection(Selection[List[S], S]):
-    def __init__(self):
-        super(RandomSolutionSelection, self).__init__()
-
     def execute(self, solution_list: List[S]) -> S:
         if solution_list is None:
             raise Exception("The solution list is null")
@@ -97,7 +89,6 @@ class RandomSolutionSelection(Selection[List[S], S]):
 
 class RankingAndCrowdingDistanceSelection(Selection[List[S], List[S]]):
     def __init__(self, max_population_size: int):
-        super(RankingAndCrowdingDistanceSelection, self).__init__()
         self.max_population_size = max_population_size
 
     def execute(self, solution_list: List[S]) -> List[S]:
@@ -124,7 +115,6 @@ class RankingAndCrowdingDistanceSelection(Selection[List[S], List[S]]):
 
 class BinaryTournament2Selection(Selection[List[S], S]):
     def __init__(self, comparator_list: List[Comparator]):
-        super(BinaryTournament2Selection, self).__init__()
         self.comparator_list = comparator_list
 
     def get_name(self):

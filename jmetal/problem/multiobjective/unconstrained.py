@@ -6,9 +6,12 @@ from jmetal.core.solution import FloatSolution
 
 """ Unconstrained Test problems for multi-objective optimization """
 
+
 class Kursawe(FloatProblem):
     """ Class representing problem Kursawe """
+
     def __init__(self, number_of_variables: int = 3):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_objectives = len(self.objectives)
@@ -46,6 +49,7 @@ class Kursawe(FloatProblem):
 
 class Fonseca(FloatProblem):
     def __init__(self):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_variables = 3
@@ -75,6 +79,7 @@ class Fonseca(FloatProblem):
 
 class Schaffer(FloatProblem):
     def __init__(self):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
         self.number_of_variables = 1
@@ -101,6 +106,7 @@ class Schaffer(FloatProblem):
 
 class Viennet2(FloatProblem):
     def __init__(self):
+        super().__init__()
         self.objectives = [self.Objective1(), self.Objective2(), self.Objective3()]
 
         self.number_of_variables = 2
