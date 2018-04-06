@@ -27,7 +27,7 @@ class SequentialEvaluator(Evaluator[S]):
 
 
 class ParallelEvaluator(Evaluator[S]):
-    def __init__(self, processes=None):
+    def __init__(self, processes: int=4):
         self.pool = ThreadPool(processes)
 
     def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
@@ -37,10 +37,16 @@ class ParallelEvaluator(Evaluator[S]):
 
 
 class DaskParallelEvaluator(Evaluator[S]):
+    def __init__(self, processes: int=4):
+        self.pool = ThreadPool(processes)
+
     def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
         output = []
         for solution in solution_list:
-            solution = dask.delayed(Evaluator[S].evaluate_solution)(solution, problem)
-            output.append(solution)
+            delayed = dask.delayed(Evaluator[S].evaluate_solution)(solution, problem)
+            output.append(delayed)
 
-        return dask.compute(*output)
+        with dask.set_options(pool=self.pool):
+            dask.compute(*output)
+
+        return solution_list

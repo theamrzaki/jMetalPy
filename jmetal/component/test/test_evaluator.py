@@ -9,10 +9,11 @@ class ParrallelEvaluatorTestCases(unittest.TestCase):
         problem = ZDT1(4)
         solution_list = [problem.create_solution(), problem.create_solution(),
                          problem.create_solution(), problem.create_solution()]
-        dask_evaluator = DaskParallelEvaluator()
 
-        output = dask_evaluator.evaluate(solution_list, problem)
-        print(output)
+        dask_evaluator = DaskParallelEvaluator()
+        dask_evaluator.evaluate(solution_list, problem)
+        
+        print(solution_list[0].objectives)
 
 
 if __name__ == '__main__':
