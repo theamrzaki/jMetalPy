@@ -14,31 +14,32 @@ Any ideas about how the structure the project, coding style, useful tools (I'm u
 ---
 
 # Table of Contents
-- [Usage](#usage)
+- [Installation](#installation)
 	- [Dependencies](#dependencies)
-- [History](#history)
-	- [Last changes (December 18th 2017)](#last-changes-december-18th-2017)
+- [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
 
+# Installation
+To download jMetalPy just clone the Git repository hosted in GitHub:
+```bash
+$ git clone https://github.com/jMetal/jMetalPy.git
+$ python setup.py install
+```
 
-# Usage
-Examples of configuring and running all the included algorithms are located in the [jmetal.runner](https://github.com/jMetal/jMetalPy/tree/master/jmetal/runner) folder.
+Alternatively, you can install with `pip`:
+```bash
+$ pip install jmetalpy
+```
 
 ## Dependencies
 With Python 3.6 installed, run:
-```Bash
-$ git clone https://github.com/jMetal/jMetalPy.git
+```bash
 $ pip install -r requirements.txt
 ```
 
-# History
-See [CHANGELOG](CHANGELOG.md) for full version history.
-
-## Last changes (January 18th 2018)
-* (Fix) Search solution in `ScatterPlot()` now return only one solution object (as intended).
-* Added class `ParallelEvaluator` (Contribution of Michael Cipold)
-* Fixed a bug in class `DominanceComparator`
+# Usage
+Examples of configuring and running all the included algorithms are located in the [jmetalpy.runner](https://github.com/jMetal/jMetalPy/tree/master/jmetalpy/runner) folder.
 
 # Contributing
 Please read [CONTRIBUTING](CONTRIBUTING.md) for details on how to contribute to the project.
