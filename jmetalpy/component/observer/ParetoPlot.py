@@ -1,6 +1,6 @@
 import logging
 
-from jmetalpy.core.observable import Observer
+from jmetalpy.core.algorithm.observable import Observer
 from jmetalpy.util.solution_list_output import SolutionListOutput
 
 logging.basicConfig(level=logging.INFO)

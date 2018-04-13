@@ -7,7 +7,8 @@ S = TypeVar('S')
 
 
 class Dominance:
-    def __init__(self, constraint_comparator = SolutionAttribute("overall_constraint_violation", lowest_is_best=False)):
+
+    def __init__(self, constraint_comparator=SolutionAttribute("overall_constraint_violation", lowest_is_best=False)):
         self.constraint_comparator = constraint_comparator
 
     def compare(self, solution1: Solution, solution2: Solution) -> int:

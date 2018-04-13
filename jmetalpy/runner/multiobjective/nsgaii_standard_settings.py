@@ -1,39 +1,45 @@
 import logging
-from typing import List
 
 from jmetalpy.algorithm.multiobjective.nsgaii import NSGAII
-from jmetalpy.core.solution import FloatSolution
+from jmetalpy.component.population import RandomInitialCreation
 from jmetalpy.operator.crossover import SBX
 from jmetalpy.operator.mutation import Polynomial
 from jmetalpy.operator.selection import BinaryTournament
 from jmetalpy.problem.multiobjective.zdt import ZDT1
-from jmetalpy.component.evaluator import Sequential, ProcessPool
+from jmetalpy.component.evaluator import Sequential
 from jmetalpy.component.comparator import RankingAndCrowdingDistance
+from jmetalpy.component.termination import ByEvaluations
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 def main() -> None:
+    # component creation
     problem = ZDT1()
+    initial_population = RandomInitialCreation(population_size=100)
+    mutation = Polynomial(1.0/problem.number_of_variables, distribution_index=20)
+    crossover = SBX(1.0, distribution_index=20)
+    selection = BinaryTournament(RankingAndCrowdingDistance())
+    evaluator = Sequential()
+    terminator = ByEvaluations(25000)
 
-    algorithm = NSGAII[FloatSolution, List[FloatSolution]](
+    # set-up algorithm
+    algorithm = NSGAII(
         problem=problem,
-        population_size=100,
-        max_evaluations=25000,
-        mutation=Polynomial(1.0/problem.number_of_variables, distribution_index=20),
-        crossover=SBX(1.0, distribution_index=20),
-        selection=BinaryTournament(RankingAndCrowdingDistance()),
-        evaluator=Sequential()
+        initial_population=initial_population,
+        mutation=mutation,
+        crossover=crossover,
+        selection=selection,
+        evaluator=evaluator,
+        terminator=terminator
     )
 
+    # run
     algorithm.run()
-
-    # SolutionListOutput[FloatSolution].print_function_values_to_file("FUN."+problem.get_name(), algorithm.population)
 
     logger.info("Algorithm (continuous problem): " + algorithm.get_name())
     logger.info("Problem: " + problem.get_name())
-    logger.info("Computing time: " + str(algorithm.total_computing_time))
 
 
 if __name__ == '__main__':

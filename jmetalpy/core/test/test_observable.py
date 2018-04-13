@@ -1,6 +1,6 @@
 import unittest
 
-from jmetalpy.core.observable import DefaultObservable, Observer
+from jmetalpy.core.algorithm.observable import DefaultObservable, Observer
 
 
 class ObservableTestCases(unittest.TestCase):

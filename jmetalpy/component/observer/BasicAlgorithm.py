@@ -1,6 +1,6 @@
 import logging
 
-from jmetalpy.core.observable import Observer
+from jmetalpy.core.algorithm.observable import Observer
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

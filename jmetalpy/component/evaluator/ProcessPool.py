@@ -8,6 +8,7 @@ S = TypeVar('S')
 
 
 class Submit:
+
     def __init__(self, submit_func):
         self.submit_func = submit_func
 
@@ -17,6 +18,7 @@ class Submit:
 
 
 class ProcessPool(Submit):
+
     def __init__(self, processes: int=4):
         self.executor = ProcessPoolExecutor(processes)
         super(ProcessPool, self).__init__(self.executor.submit)

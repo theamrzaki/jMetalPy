@@ -4,7 +4,7 @@ from jmetalpy.core.operator import Mutation
 from jmetalpy.core.solution import FloatSolution
 
 
-class Polynomial(Mutation[FloatSolution]):
+class Polynomial(Mutation):
     def __init__(self, probability: float, distribution_index: float = 0.20):
         super(Polynomial, self).__init__(probability=probability)
         self.distribution_index = distribution_index

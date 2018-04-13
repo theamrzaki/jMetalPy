@@ -9,8 +9,9 @@ from jmetalpy.component.comparator import Dominance
 S = TypeVar('S')
 
 
-class BinaryTournament(Selection[List[S], S]):
+class BinaryTournament(Selection):
     def __init__(self, comparator: Comparator = Dominance()):
+        super().__init__()
         self.comparator = comparator
 
     def execute(self, solution_list: List[S]) -> S:

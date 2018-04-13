@@ -1,4 +1,4 @@
-from typing import List, Generic, TypeVar
+from typing import List, TypeVar
 
 import time
 
@@ -6,22 +6,19 @@ BitSet = List[bool]
 S = TypeVar('S')
 
 
-class Solution(Generic[S]):
-    """ Class representing solutions """
+class Solution:
 
-    def __init__(self, number_of_variables : int, number_of_objectives : int, number_of_constraints = 0):
+    def __init__(self, number_of_variables: int, number_of_objectives: int, number_of_constraints=0):
         self.number_of_objectives: int = number_of_objectives
         self.number_of_variables: int = number_of_variables
         self.number_of_constraints: int = number_of_constraints
         self.objectives = [0.0 for _ in range(self.number_of_objectives)]
         self.variables = [[] for _ in range(self.number_of_variables)]
-        self.birth_date = time.time()
         self.attributes = {}
-        self.evaluated = None
+        self.birth_date = time.time()
 
 
-class BinarySolution(Solution[BitSet]):
-    """ Class representing float solutions """
+class BinarySolution(Solution):
 
     def __init__(self, number_of_variables: int, number_of_objectives: int, number_of_constraints=0):
         super(BinarySolution, self).__init__(number_of_variables, number_of_objectives, number_of_constraints)
@@ -44,8 +41,7 @@ class BinarySolution(Solution[BitSet]):
         return total
 
 
-class FloatSolution(Solution[float]):
-    """ Class representing float solutions """
+class FloatSolution(Solution):
 
     def __init__(self, number_of_variables : int, number_of_objectives : int, number_of_constraints : int,
                  lower_bound : List[float], upper_bound : List[float]):
@@ -66,8 +62,7 @@ class FloatSolution(Solution[float]):
         return new_solution
 
 
-class IntegerSolution(Solution[int]):
-    """ Class representing integer solutions """
+class IntegerSolution(Solution):
 
     def __init__(self, number_of_variables : int, number_of_objectives : int, number_of_constraints : int,
                  lower_bound : List[int], upper_bound : List[int]):

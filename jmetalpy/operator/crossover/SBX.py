@@ -6,7 +6,7 @@ from jmetalpy.core.operator import Crossover
 from jmetalpy.core.solution import FloatSolution
 
 
-class SBX(Crossover[FloatSolution, FloatSolution]):
+class SBX(Crossover):
     __EPS = 1.0e-14
 
     def __init__(self, probability: float, distribution_index: float = 20.0):

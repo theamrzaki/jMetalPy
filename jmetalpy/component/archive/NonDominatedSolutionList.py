@@ -6,7 +6,7 @@ from jmetalpy.component.comparator import Dominance, EqualSolutions
 S = TypeVar('S')
 
 
-class NonDominatedSolutionList(Archive[S]):
+class NonDominatedSolutionList(Archive):
     def __init__(self):
         super(NonDominatedSolutionList, self).__init__()
         self.comparator = Dominance()

@@ -1,6 +1,6 @@
 from math import sqrt, exp, pow, sin
 
-from jmetalpy.core.objective import Objective
+from jmetalpy.core.problem import Objective
 from jmetalpy.core.problem import FloatProblem
 from jmetalpy.core.solution import FloatSolution
 

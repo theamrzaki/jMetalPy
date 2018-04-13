@@ -1,25 +1,34 @@
-from typing import TypeVar, Generic, List
+import threading
+from typing import TypeVar
+
+from jmetalpy.core.algorithm.observable import DefaultObservable, Observer, Observable
 
 __author__ = "Antonio J. Nebro"
 
-Source = TypeVar('S')
-Result = TypeVar('R')
+S = TypeVar('S')
+R = TypeVar('R')
 
 
-class Operator(Generic[Source, Result]):
-    """ Class representing operators """
+class Operator(DefaultObservable, Observer, threading.Thread):
 
-    def execute(self, source: Source) -> Result:
+    def __init__(self):
+        super(Operator, self).__init__()
+        self.observable: Observable = DefaultObservable()
+
+    def update(self, *args, **kwargs):
+        pass
+
+    def execute(self, source: S) -> R:
         pass
 
     def get_name(self):
         pass
 
 
-class Mutation(Operator[Source, Source]):
-    """ Class representing mutation operators """
+class Mutation(Operator):
 
     def __init__(self, probability: float):
+        super().__init__()
         if probability > 1.0:
             raise Exception("The probability is greater than one: " + str(probability))
         elif probability < 0.0:
@@ -27,12 +36,14 @@ class Mutation(Operator[Source, Source]):
 
         self.probability = probability
 
-    def execute(self, source: Source) -> Source:
+    def execute(self, source: S) -> S:
         pass
 
 
-class Crossover(Operator[List[Source], List[Result]]):
+class Crossover(Operator):
+
     def __init__(self, probability: float):
+        super().__init__()
         if probability > 1.0:
             raise Exception("The probability is greater than one: " + str(probability))
         elif probability < 0.0:
@@ -40,13 +51,14 @@ class Crossover(Operator[List[Source], List[Result]]):
 
         self.probability = probability
 
-    def execute(self, source: Source) -> Result:
+    def execute(self, source: S) -> R:
         pass
 
     def get_number_of_parents(self) -> int:
         pass
 
 
-class Selection(Operator[Source, Result]):
-    def execute(self, source: Source) -> Result:
+class Selection(Operator):
+
+    def execute(self, source: S) -> R:
         pass

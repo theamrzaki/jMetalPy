@@ -8,6 +8,7 @@ S = TypeVar('S')
 
 
 class RankingAndCrowdingDistance(Comparator):
+
     def compare(self, solution1: Solution, solution2: Solution) -> int:
         result = \
             SolutionAttribute("dominance_ranking").compare(solution1, solution2)

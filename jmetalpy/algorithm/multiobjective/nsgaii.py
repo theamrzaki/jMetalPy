@@ -1,42 +1,57 @@
-from typing import TypeVar, List
+from typing import TypeVar
 
-from jmetalpy.algorithm.singleobjective.evolutionaryalgorithm import GenerationalGeneticAlgorithm
 from jmetalpy.component.evaluator import Sequential
+from jmetalpy.component.population import RandomInitialCreation
+from jmetalpy.component.termination import ByEvaluations
+from jmetalpy.core.algorithm import Algorithm
 from jmetalpy.core.evaluator import Evaluator
 from jmetalpy.core.operator import Mutation, Crossover, Selection
 from jmetalpy.core.problem import Problem
-from jmetalpy.operator.selection import RankingAndCrowdingDistanceSelection
-from jmetalpy.core.observable import Observable, DefaultObservable
+from jmetalpy.core.terminator import Terminator
+from jmetalpy.core.population import Population
 
 S = TypeVar('S')
-R = TypeVar(List[S])
+R = TypeVar(Population)
 
 
-class NSGAII(GenerationalGeneticAlgorithm[S, R]):
-    def __init__(self,
-                 problem: Problem[S],
-                 population_size: int,
-                 max_evaluations: int,
-                 mutation: Mutation[S],
-                 crossover: Crossover[S, S],
-                 selection: Selection[List[S], S],
-                 observable: Observable = DefaultObservable(),
-                 evaluator: Evaluator[S] = Sequential[S]()):
-        super(NSGAII, self).__init__(
-            problem,
-            population_size,
-            max_evaluations,
-            mutation,
-            crossover,
-            selection,
-            observable,
-            evaluator)
+class NSGAII(Algorithm):
 
-    def replacement(self, population: List[S], offspring_population: List[S]) -> List[List[TypeVar('S')]]:
-        join_population = population + offspring_population
-        return RankingAndCrowdingDistanceSelection(self.population_size).execute(join_population)
+    def __init__(self, problem: Problem, initial_population: RandomInitialCreation, mutation: Mutation,
+                 crossover: Crossover, selection: Selection, evaluator: Evaluator = Sequential(),
+                 terminator: Terminator = ByEvaluations(1500)):
+        super().__init__()
+        self.initial_population = initial_population
+        self.problem = problem
+        self.mutation = mutation
+        self.crossover = crossover
+        self.selection = selection
+        self.evaluator = evaluator
+        self.terminator = terminator
 
-    def get_name(self) -> str:
-        return "NSGA-II"
+    def run(self):
+        # register components
+        print("ADDING COMPONENTS")
+        self.initial_population.register(self.evaluator)
+        self.evaluator.register(self.terminator)
 
+        print("MAIN LOOP")
+        self.terminator.register(self.selection)
+        self.selection.register(self.crossover)
+        self.crossover.register(self.mutation)
+        self.mutation.register(self.evaluator)
+        self.evaluator.register(self.terminator)
+        #self.evaluator.register(self.replacement)
+        #self.replacement.register(self.terminator)
+
+        print("STARTING THREADS")
+        self.initial_population.start()
+        self.evaluator.start()
+        self.terminator.start()
+        self.selection.start()
+        self.crossover.start()
+        self.mutation.start()
+
+        # start the algorithm
+        print("RUNNING ALGORITHM")
+        self.initial_population.apply(self.problem)
 

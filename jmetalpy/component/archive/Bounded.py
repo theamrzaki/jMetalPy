@@ -5,7 +5,7 @@ from jmetalpy.core.archive import Archive
 S = TypeVar('S')
 
 
-class Bounded(Archive[S]):
+class Bounded(Archive):
     def __init__(self, maximum_size: int):
         super(Bounded, self).__init__()
         self.maximum_size = maximum_size

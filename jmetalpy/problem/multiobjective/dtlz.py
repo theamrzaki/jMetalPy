@@ -1,47 +1,13 @@
-"""
-    ============================================================
-    :mod:`dtlz` -- DTLZ problem family of multi-objective problems
-    ============================================================
-
-    This module provides the implementation of the DTLZ problems defined in:
-
-    ...
-
-    DOI: ...
-
-
-    These problems are scalable in the number of the decision variables and the number of
-    objective functions
-
-    .. module:: jmetal.problem.multiobjective.dtlz
-
-    :platform: Unix, Windows
-    :synopsis: Module including the implementation of the DTLZ problem family.
-
-    .. moduleauthor:: Antonio J. Nebro <antonio@lcc.uma.es>
-
-"""
-
-
 from math import pi, cos
 
-from jmetalpy.core.objective import Objective
+from jmetalpy.core.problem import Objective
 from jmetalpy.core.problem import FloatProblem
 from jmetalpy.core.solution import FloatSolution
 
 
 class DTLZ1(FloatProblem):
-    """ Problem DTLZ1
-    .. note:: Unconstrained problem. The default number of variables and objectives are,
-    respectively, 7 and 3.
-    .. note:: Continuous problem having a convex Pareto front
-    """
 
     def __init__(self, number_of_variables: int = 30, number_of_objectives=3):
-        """Constructor
-        Arguments:
-        :param number_of_variables: number of decision variables of the problem
-        """
         super().__init__()
         self.objectives = [self.Dtlz1Objective() for i in range(number_of_objectives)]
 

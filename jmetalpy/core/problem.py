@@ -1,17 +1,18 @@
 import random
-from typing import Generic, TypeVar
+from typing import TypeVar
+
 
 import jmetalpy
-from jmetalpy.core.solution import BinarySolution, FloatSolution, IntegerSolution
+from jmetalpy.core.solution import BinarySolution, FloatSolution, IntegerSolution, Solution
 
 S = TypeVar('S')
 
 
-class Problem(Generic[S]):
-    """ Class representing problems """
+class Problem:
 
     def __init__(self):
-        self.objectives = [jmetalpy.core.objective.Objective]
+        super().__init__()
+        self.objectives = [jmetalpy.core.problem.Objective]
         self.number_of_variables: int = None
         self.number_of_objectives: int = None
         self.number_of_constraints: int = None
@@ -29,12 +30,11 @@ class Problem(Generic[S]):
     def create_solution(self) -> S:
         pass
 
-    def get_name(self) -> str :
+    def get_name(self) -> str:
         pass
 
 
-class BinaryProblem(Problem[BinarySolution]):
-    """ Class representing binary problems """
+class BinaryProblem(Problem):
 
     def evaluate(self, solution: BinarySolution) -> None:
         pass
@@ -43,13 +43,12 @@ class BinaryProblem(Problem[BinarySolution]):
         pass
 
 
-class FloatProblem(Problem[FloatSolution]):
-    """ Class representing float problems """
+class FloatProblem(Problem):
 
     def __init__(self):
         super().__init__()
-        self.lower_bound : [] = None
-        self.upper_bound : [] = None
+        self.lower_bound: [] = None
+        self.upper_bound: [] = None
 
     def create_solution(self) -> FloatSolution:
         new_solution = FloatSolution(self.number_of_variables, self.number_of_objectives, self.number_of_constraints,
@@ -60,13 +59,12 @@ class FloatProblem(Problem[FloatSolution]):
         return new_solution
 
 
-class IntegerProblem(Problem[IntegerSolution]):
-    """ Class representing integer problems """
+class IntegerProblem(Problem):
 
     def __init__(self):
         super().__init__()
-        self.lower_bound : [] = None
-        self.upper_bound : [] = None
+        self.lower_bound: [] = None
+        self.upper_bound: [] = None
 
     def create_solution(self) -> IntegerSolution:
         new_solution = IntegerSolution(
@@ -79,3 +77,12 @@ class IntegerProblem(Problem[IntegerSolution]):
             [int(random.uniform(self.lower_bound[i]*1.0, self.upper_bound[i]*1.0)) for i in range(self.number_of_variables)]
 
         return new_solution
+
+
+class Objective:
+
+    def compute(self, solution: Solution, problem: Problem) -> float:
+        pass
+
+    def is_a_minimization_objective(self) -> bool:
+        return True

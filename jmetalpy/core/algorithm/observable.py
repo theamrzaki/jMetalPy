@@ -16,6 +16,7 @@ class Observer(object):
 
 
 class Observable(object):
+
     def register(self, observer):
         pass
 
@@ -30,6 +31,7 @@ class Observable(object):
 
 
 class DefaultObservable(Observable):
+
     def __init__(self):
         self.observers = []
 

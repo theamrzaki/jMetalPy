@@ -5,7 +5,7 @@ from jmetalpy.core.operator import Crossover
 from jmetalpy.core.solution import Solution
 
 
-class Null(Crossover[Solution, Solution]):
+class Null(Crossover):
     def __init__(self):
         super(Null, self).__init__(probability=0)
 

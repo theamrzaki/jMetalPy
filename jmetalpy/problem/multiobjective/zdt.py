@@ -1,48 +1,13 @@
-"""
-    ============================================================
-    :mod:`zdt` -- ZDT problem family of multi-objective problems
-    ============================================================
-
-    This module provides the implementation of the ZDT problems defined in:
-
-    Zitzler, E., Deb, K., Thiele, L.
-    Comparison of multiobjective evolutionary algorithms: Empirical results.
-    Evolutionary Computation 8(2), pp: 173-195. 2000
-
-    DOI: https://doi.org/10.1162/106365600568202
-
-
-    These problems are scalable in the number of the decision variables, i.e. the Pareto front
-    is the same independently of the number of variables
-
-    .. module:: jmetal.problem.multiobjective.zdt
-
-    :platform: Unix, Windows
-    :synopsis: Module including the implementation of the ZDT problem family.
-
-    .. moduleauthor:: Antonio J. Nebro <antonio@lcc.uma.es>
-
-"""
-
-
 from math import sqrt, exp, pow, sin, pi, cos
 
-from jmetalpy.core.objective import Objective
+from jmetalpy.core.problem import Objective
 from jmetalpy.core.problem import FloatProblem
 from jmetalpy.core.solution import FloatSolution
 
 
 class ZDT1(FloatProblem):
-    """ Problem ZDT1
-    .. note:: Bi-objective unconstrained problem. The default number of variables is 30.
-    .. note:: Continuous problem having a convex Pareto front
-    """
 
     def __init__(self, number_of_variables: int = 30):
-        """Constructor
-        Arguments:
-        :param number_of_variables: number of decision variables of the problem
-        """
         super().__init__()
         self.objectives = [self.Objective1(), self.Objective2()]
 
@@ -85,10 +50,6 @@ class ZDT1(FloatProblem):
 
 
 class ZDT2(FloatProblem):
-    """ Problem ZDT2
-    .. note:: Bi-objective unconstrained problem. The default number of variables is 30.
-    .. note:: Continuous problem having a non-convex Pareto front
-    """
 
     def __init__(self, number_of_variables: int = 30):
         super().__init__()
@@ -131,10 +92,6 @@ class ZDT2(FloatProblem):
 
 
 class ZDT3(FloatProblem):
-    """ Problem ZDT3
-    .. note:: Bi-objective unconstrained problem. The default number of variables is 30.
-    .. note:: Continuous problem having a partitioned Pareto front
-    """
 
     def __init__(self, number_of_variables: int = 30):
         super().__init__()
@@ -177,10 +134,6 @@ class ZDT3(FloatProblem):
 
 
 class ZDT4(FloatProblem):
-    """ Problem ZDT4
-    .. note:: Bi-objective unconstrained problem. The default number of variables is 10.
-    .. note:: Continuous multi-modal problem having a convex Pareto front
-    """
 
     def __init__(self, number_of_variables: int = 10):
         super().__init__()
@@ -227,10 +180,6 @@ class ZDT4(FloatProblem):
 
 
 class ZDT6(FloatProblem):
-    """ Problem ZDT6
-    .. note:: Bi-objective unconstrained problem. The default number of variables is 10.
-    .. note:: Continuous problem having a non-convex Pareto front
-    """
 
     def __init__(self, number_of_variables: int = 10):
         super().__init__()

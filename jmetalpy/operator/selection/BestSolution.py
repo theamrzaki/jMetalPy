@@ -6,7 +6,7 @@ from jmetalpy.component.comparator import Dominance
 S = TypeVar('S')
 
 
-class BestSolution(Selection[List[S], S]):
+class BestSolution(Selection):
     def execute(self, solution_list: List[S]) -> S:
         if solution_list is None:
             raise Exception("The solution list is null")

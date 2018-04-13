@@ -3,11 +3,8 @@ import random
 from jmetalpy.core.problem import BinaryProblem, FloatProblem
 from jmetalpy.core.solution import BinarySolution, FloatSolution
 
-__author__ = "Antonio J. Nebro"
-
 
 class OneMax(BinaryProblem):
-    """ Class representing problem Kursawe """
 
     def __init__(self, number_of_bits: int = 256):
         super().__init__()
@@ -35,6 +32,7 @@ class OneMax(BinaryProblem):
 
 
 class Sphere(FloatProblem):
+
     def __init__(self, number_of_variables: int = 10):
         super().__init__()
         self.number_of_objectives = 1

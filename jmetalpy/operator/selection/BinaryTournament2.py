@@ -7,8 +7,9 @@ from jmetalpy.core.comparator import Comparator
 S = TypeVar('S')
 
 
-class BinaryTournament2(Selection[List[S], S]):
+class BinaryTournament2(Selection):
     def __init__(self, comparator_list: List[Comparator]):
+        super().__init__()
         self.comparator_list = comparator_list
 
     def get_name(self):

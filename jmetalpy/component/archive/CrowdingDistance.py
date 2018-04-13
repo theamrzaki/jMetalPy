@@ -7,7 +7,7 @@ from jmetalpy.component.comparator import SolutionAttribute
 S = TypeVar('S')
 
 
-class CrowdingDistance(Bounded[S]):
+class CrowdingDistance(Bounded):
     def __init__(self, maximum_size: int):
         super(CrowdingDistance, self).__init__(maximum_size)
         self.__non_dominated_solution_archive = NonDominatedSolutionList()

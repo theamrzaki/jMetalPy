@@ -7,26 +7,15 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class DensityEstimator(List[S]):
-    """This is the interface of any density estimator algorithm.
-    """
+class DensityEstimator:
 
     def compute_density_estimator(self, solution_list: List[S]) -> float:
         pass
 
 
-class DensityCrowdingDistance(DensityEstimator[List[S]]):
-    """This class implements a DensityEstimator based on the crowding distance.
-    In consequence, the main method of this class is :func:`compute_density_estimator`.
-    """
+class DensityCrowdingDistance(DensityEstimator):
 
     def compute_density_estimator(self, solution_list: List[S]):
-        """This function performs the computation of the crowding density estimation over the solution list.
-            .. note::
-               This method assign the distance in the inner elements of the solution list.
-
-        :param solution_list: The list of solutions.
-        """
         size = len(solution_list)
 
         if size is 0:

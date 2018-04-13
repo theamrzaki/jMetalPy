@@ -7,8 +7,9 @@ from jmetalpy.core.ranking import FastNonDominatedRanking
 S = TypeVar('S')
 
 
-class RankingAndCrowdingDistanceSelection(Selection[List[S], List[S]]):
+class RankingAndCrowdingDistanceSelection(Selection):
     def __init__(self, max_population_size: int):
+        super().__init__()
         self.max_population_size = max_population_size
 
     def execute(self, solution_list: List[S]) -> List[S]:

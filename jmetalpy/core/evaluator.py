@@ -1,12 +1,23 @@
+import threading
+
+from jmetalpy.core.algorithm.observable import Observer, DefaultObservable
+from jmetalpy.core.population import Population
 from jmetalpy.core.problem import Problem
 
-from typing import TypeVar, List, Generic
+from typing import TypeVar
 
 S = TypeVar('S')
 
 
-class Evaluator(Generic[S]):
-    def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
+class Evaluator(DefaultObservable, Observer, threading.Thread):
+
+    def __init__(self):
+        super(Evaluator, self).__init__()
+
+    def update(self, *args, **kwargs):
+        pass
+
+    def evaluate(self, solution_list: Population, problem: Problem) -> Population:
         pass
 
     @staticmethod

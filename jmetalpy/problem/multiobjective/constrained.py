@@ -1,12 +1,11 @@
 from math import pi, cos, atan
 
-from jmetalpy.core.objective import Objective
+from jmetalpy.core.problem import Objective
 from jmetalpy.core.solution import FloatSolution
 from jmetalpy.core.problem import FloatProblem
 
 
 class Srinivas(FloatProblem):
-    """ Class representing problem Srinivas """
 
     def __init__(self):
         super().__init__()
@@ -61,7 +60,6 @@ class Srinivas(FloatProblem):
 
 
 class Tanaka(FloatProblem):
-    """ Class representing problem Tanaka """
 
     def __init__(self):
         super().__init__()

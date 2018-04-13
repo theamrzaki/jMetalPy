@@ -6,6 +6,7 @@ S = TypeVar('S')
 
 
 class EqualSolutions:
+
     def compare(self, solution1: Solution, solution2: Solution) -> int:
         if solution1 is None:
             return 1

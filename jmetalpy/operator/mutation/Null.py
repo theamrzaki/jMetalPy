@@ -2,7 +2,7 @@ from jmetalpy.core.operator import Mutation
 from jmetalpy.core.solution import Solution
 
 
-class Null(Mutation[Solution]):
+class Null(Mutation):
     def __init__(self):
         super(Null, self).__init__(probability=0)
 

@@ -1,10 +1,12 @@
-from typing import TypeVar, Generic, List
+from typing import TypeVar, List
 
 S = TypeVar('S')
 
 
-class Archive(Generic[S]):
+class Archive:
+
     def __init__(self):
+        super().__init__()
         self.solution_list: List[S] = []
 
     def add(self, solution: S) -> bool:
