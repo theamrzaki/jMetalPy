@@ -1,3 +1,4 @@
+import logging
 from typing import TypeVar
 
 from jmetalpy.component.evaluator import Sequential
@@ -13,12 +14,14 @@ from jmetalpy.core.population import Population
 S = TypeVar('S')
 R = TypeVar(Population)
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 class NSGAII(Algorithm):
 
     def __init__(self, problem: Problem, initial_population: RandomInitialCreation, mutation: Mutation,
-                 crossover: Crossover, selection: Selection, evaluator: Evaluator = Sequential(),
-                 terminator: Terminator = ByEvaluations(1500)):
+                 crossover: Crossover, selection: Selection, evaluator: Evaluator, terminator: Terminator):
         super().__init__()
         self.initial_population = initial_population
         self.problem = problem
@@ -29,12 +32,11 @@ class NSGAII(Algorithm):
         self.terminator = terminator
 
     def run(self):
-        # register components
-        print("ADDING COMPONENTS")
+        logger.info("ADDING COMPONENTS...")
         self.initial_population.register(self.evaluator)
         self.evaluator.register(self.terminator)
 
-        print("MAIN LOOP")
+        logger.info("CREATING MAIN LOOP...")
         self.terminator.register(self.selection)
         self.selection.register(self.crossover)
         self.crossover.register(self.mutation)
@@ -43,7 +45,7 @@ class NSGAII(Algorithm):
         #self.evaluator.register(self.replacement)
         #self.replacement.register(self.terminator)
 
-        print("STARTING THREADS")
+        logger.info("STARTING THREADS...")
         self.initial_population.start()
         self.evaluator.start()
         self.terminator.start()
@@ -52,6 +54,6 @@ class NSGAII(Algorithm):
         self.mutation.start()
 
         # start the algorithm
-        print("RUNNING ALGORITHM")
+        logger.info("...OK! RUNNING NSGA-II")
         self.initial_population.apply(self.problem)
 

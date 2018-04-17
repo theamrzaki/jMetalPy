@@ -1,22 +1,55 @@
+import logging
+from queue import Queue
+
 from jmetalpy.core.terminator import Terminator
 from jmetalpy.core.population import Population
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class ByEvaluations(Terminator):
 
     def __init__(self, max_evaluations: int = 1500):
         super(ByEvaluations, self).__init__()
+        self.buffer = Queue()
         self.max_evaluations = max_evaluations
 
     def update(self, *args, **kwargs):
-        population = kwargs["population"]
+        logger.info("TerminationByEvaluations update invoked")
+        population = kwargs["POPULATION"]
 
-        if population.__getattribute__("evaluations") > self.max_evaluations:
-            population.__setattr__("is_terminated", True)
-            print("ALGORITHM TERMINATED!!")
+        try:
+            self.buffer.put(population)
+        except Exception as ex:
+            print("TERMINATION: " + str(ex))
 
-        observable_data = {'population': population}
+    def apply(self, population: Population):
+        evaluations = population.evaluations
+
+        logger.info("TERMINATION. EVALS: " + str(evaluations) + ". MAX: " + str(self.max_evaluations))
+
+        if evaluations >= self.max_evaluations:
+            population.is_terminated = True
+            logger.info("TERMINATION. ALGORITHM TERMINATED")
+        else:
+            logger.info("EVALUATIONS: " + str(evaluations))
+
+        observable_data = {'POPULATION': population}
         self.notify_all(**observable_data)
 
-    def apply(self, population: Population) -> float:
-        pass
+    def run(self):
+        logger.info("TERMINATION: RUN")
+
+        try:
+            while True:
+                population = self.buffer.get()
+                logger.info("TERMINATION OBSERVER: GET READY")
+                self.apply(population)
+
+                if population.is_terminated:
+                    break
+        except Exception as ex:
+            print("TERMINATION: " + str(ex))
+
+        logger.info("TERMINATION: END RUN")

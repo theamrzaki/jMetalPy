@@ -1,20 +1,36 @@
+import logging
+from queue import Queue
 import random
-from typing import List, TypeVar
+from copy import copy
+from typing import TypeVar
 
 from jmetalpy.core.operator import Selection
 from jmetalpy.core.comparator import Comparator
 from jmetalpy.component.comparator import Dominance
-
+from jmetalpy.core.population import Population
 
 S = TypeVar('S')
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class BinaryTournament(Selection):
     def __init__(self, comparator: Comparator = Dominance()):
-        super().__init__()
+        super(BinaryTournament, self).__init__()
+        self.buffer = Queue()
         self.comparator = comparator
 
-    def execute(self, solution_list: List[S]) -> S:
+    def update(self, *args, **kwargs):
+        logger.info("SELECTION update invoked")
+        population = kwargs['POPULATION']
+
+        try:
+            self.buffer.put(population)
+        except Exception as ex:
+            print("SELECTION: " + str(ex))
+
+    def execute(self, solution_list: Population):
         if solution_list is None:
             raise Exception("The solution list is null")
         elif len(solution_list) == 0:
@@ -38,5 +54,32 @@ class BinaryTournament(Selection):
 
         return result
 
-    def get_name(self) -> str:
-        return "Binary tournament selection"
+    def apply(self, population: Population):
+        if not population.is_terminated:
+
+            logger.info("SELECTION: APPLY invoked")
+
+            new_population = copy(population)
+            while len(new_population) < len(population):
+                new_population.append(self.execute(population))
+
+            population.mating_pool = new_population
+
+        observable_data = {'POPULATION': population}
+        self.notify_all(**observable_data)
+
+    def run(self):
+        logger.info("SELECTION: RUN")
+
+        try:
+            while True:
+                population = self.buffer.get()
+                logger.info("SELECTION: GET READY")
+                self.apply(population)
+
+                if population.is_terminated:
+                    break
+        except Exception as ex:
+            print("SELECTION: " + str(ex))
+
+        logger.info("SELECTION: END RUN")

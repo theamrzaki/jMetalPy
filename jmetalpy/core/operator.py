@@ -1,24 +1,21 @@
-import threading
 from typing import TypeVar
 
 from jmetalpy.core.algorithm.observable import DefaultObservable, Observer, Observable
-
-__author__ = "Antonio J. Nebro"
 
 S = TypeVar('S')
 R = TypeVar('R')
 
 
-class Operator(DefaultObservable, Observer, threading.Thread):
+class Operator(DefaultObservable, Observer):
 
     def __init__(self):
         super(Operator, self).__init__()
         self.observable: Observable = DefaultObservable()
 
-    def update(self, *args, **kwargs):
+    def execute(self, source: S) -> R:
         pass
 
-    def execute(self, source: S) -> R:
+    def update(self, *args, **kwargs):
         pass
 
     def get_name(self):
@@ -28,7 +25,7 @@ class Operator(DefaultObservable, Observer, threading.Thread):
 class Mutation(Operator):
 
     def __init__(self, probability: float):
-        super().__init__()
+        super(Mutation, self).__init__()
         if probability > 1.0:
             raise Exception("The probability is greater than one: " + str(probability))
         elif probability < 0.0:
@@ -43,7 +40,7 @@ class Mutation(Operator):
 class Crossover(Operator):
 
     def __init__(self, probability: float):
-        super().__init__()
+        super(Crossover, self).__init__()
         if probability > 1.0:
             raise Exception("The probability is greater than one: " + str(probability))
         elif probability < 0.0:
@@ -59,6 +56,9 @@ class Crossover(Operator):
 
 
 class Selection(Operator):
+
+    def __init__(self):
+        super(Selection, self).__init__()
 
     def execute(self, source: S) -> R:
         pass

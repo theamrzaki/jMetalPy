@@ -1,3 +1,4 @@
+import threading
 from abc import ABCMeta, abstractmethod
 
 
@@ -6,16 +7,13 @@ class Observer(object):
 
     @abstractmethod
     def update(self, *args, **kwargs):
-        """
-        Update method
-        :param args:
-        :param kwargs:
-        :return:
-        """
         pass
 
 
-class Observable(object):
+class Observable(threading.Thread):
+
+    def __init__(self):
+        threading.Thread.__init__(self)
 
     def register(self, observer):
         pass
@@ -33,6 +31,7 @@ class Observable(object):
 class DefaultObservable(Observable):
 
     def __init__(self):
+        super(DefaultObservable, self).__init__()
         self.observers = []
 
     def register(self, observer: Observer):

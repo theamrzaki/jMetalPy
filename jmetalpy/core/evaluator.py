@@ -1,5 +1,3 @@
-import threading
-
 from jmetalpy.core.algorithm.observable import Observer, DefaultObservable
 from jmetalpy.core.population import Population
 from jmetalpy.core.problem import Problem
@@ -9,7 +7,7 @@ from typing import TypeVar
 S = TypeVar('S')
 
 
-class Evaluator(DefaultObservable, Observer, threading.Thread):
+class Evaluator(DefaultObservable, Observer):
 
     def __init__(self):
         super(Evaluator, self).__init__()
@@ -17,7 +15,10 @@ class Evaluator(DefaultObservable, Observer, threading.Thread):
     def update(self, *args, **kwargs):
         pass
 
-    def evaluate(self, solution_list: Population, problem: Problem) -> Population:
+    def apply(self, population: Population):
+        pass
+
+    def run(self):
         pass
 
     @staticmethod

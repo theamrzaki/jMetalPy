@@ -11,13 +11,15 @@ S = TypeVar('S')
 class Problem:
 
     def __init__(self):
-        super().__init__()
-        self.objectives = [jmetalpy.core.problem.Objective]
+        self.objectives: [jmetalpy.core.problem.Objective] = None
         self.number_of_variables: int = None
         self.number_of_objectives: int = None
         self.number_of_constraints: int = None
 
     def evaluate(self, solution: S) -> None:
+        if self.objectives is None:
+            raise Exception("Not a single objective have been indicated")
+
         for i in range(self.number_of_objectives):
             if self.objectives[i].is_a_minimization_objective():
                 solution.objectives[i] = self.objectives[i].compute(solution, self)

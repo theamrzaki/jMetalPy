@@ -1,9 +1,13 @@
+from queue import Queue
+import logging
 import copy
 import random
-from typing import List
 
 from jmetalpy.core.operator import Crossover
-from jmetalpy.core.solution import FloatSolution
+from jmetalpy.core.population import Population
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class SBX(Crossover):
@@ -11,9 +15,19 @@ class SBX(Crossover):
 
     def __init__(self, probability: float, distribution_index: float = 20.0):
         super(SBX, self).__init__(probability=probability)
+        self.buffer = Queue()
         self.distribution_index = distribution_index
 
-    def execute(self, parents: List[FloatSolution]) -> List[FloatSolution]:
+    def update(self, *args, **kwargs):
+        logger.info("CROSSOVER update invoked")
+        population = kwargs['POPULATION']
+
+        try:
+            self.buffer.put(population)
+        except Exception as ex:
+            print("CROSSOVER: " + str(ex))
+
+    def execute(self, parents: Population) -> Population:
         if len(parents) != 2:
             raise Exception("The number of parents is not two: " + str(len(parents)))
 
@@ -74,7 +88,32 @@ class SBX(Crossover):
                 else:
                     offspring[0].variables[i] = value_x1
                     offspring[1].variables[i] = value_x2
+
         return offspring
+
+    def apply(self, population: Population):
+        if not population.is_terminated:
+            logger.info("CROSSOVER: APPLY invoked")
+            pass
+
+        observable_data = {'POPULATION': population}
+        self.notify_all(**observable_data)
+
+    def run(self):
+        logger.info("CROSSOVER: RUN")
+
+        try:
+            while True:
+                population = self.buffer.get()
+                logger.info("CROSSOVER: GET READY")
+                self.apply(population)
+
+                if population.is_terminated:
+                    break
+        except Exception as ex:
+            print("CROSSOVER: " + str(ex))
+
+        logger.info("CROSSOVER: END RUN")
 
     def get_number_of_parents(self):
         return 2

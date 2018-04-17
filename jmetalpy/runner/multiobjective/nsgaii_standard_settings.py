@@ -24,7 +24,7 @@ def main() -> None:
     evaluator = Sequential()
     terminator = ByEvaluations(25000)
 
-    # set-up algorithm
+    # set up algorithm
     algorithm = NSGAII(
         problem=problem,
         initial_population=initial_population,

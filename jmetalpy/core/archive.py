@@ -6,7 +6,6 @@ S = TypeVar('S')
 class Archive:
 
     def __init__(self):
-        super().__init__()
         self.solution_list: List[S] = []
 
     def add(self, solution: S) -> bool:
