@@ -5,9 +5,10 @@
 </p>
 
 # jMetalPy: Python version of the jMetal framework
-[![Build Status](https://travis-ci.org/jMetal/jMetalPy.svg?branch=master)](https://travis-ci.org/jMetal/jMetalPy)
-[![PyPI](https://img.shields.io/pypi/l/jMetalPy.svg)]()
-[![PyPI](https://img.shields.io/pypi/v/jMetalPy.svg)]()
+[![Build Status](https://img.shields.io/travis/jMetal/jMetalPy.svg?style=flat-square)](https://travis-ci.org/jMetal/jMetalPy)
+[![PyPI Version](https://img.shields.io/pypi/v/jMetalPy.svg?style=flat-square)]()
+[![PyPI License](https://img.shields.io/pypi/l/jMetalPy.svg?style=flat-square)]()
+[![PyPI Python version](https://img.shields.io/pypi/pyversions/jMetalPy.svg?style=flat-square)]()
 
 > jMetalPy is currently under heavy development!  
 > Any ideas about how the structure the project, coding style, useful tools or links to related projects are welcome (see [CONTRIBUTING](https://github.com/jMetal/jMetalPy/blob/master/CONTRIBUTING.md)). The starting point is the jMetal architecture:
