@@ -1,7 +1,7 @@
 import logging
 from queue import Queue
 
-from jmetal.core.operator import Crossover, Mutation
+from jmetalpy.core.operator import Crossover, Mutation
 
 from jmetalpy.core.operator import Operator
 from jmetalpy.core.population import Population

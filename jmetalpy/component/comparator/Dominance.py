@@ -1,6 +1,6 @@
 from typing import TypeVar
 
-from jmetal.core.solution import Solution
+from jmetalpy.core.solution import Solution
 from jmetalpy.component.comparator.SolutionAttribute import SolutionAttribute
 
 S = TypeVar('S')

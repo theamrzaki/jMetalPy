@@ -3,7 +3,7 @@ from typing import TypeVar, List, Generic
 
 import matplotlib.pyplot as plt
 
-from jmetal.util.graphic import ScatterPlot
+from jmetalpy.util.graphic import ScatterPlot
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -12,6 +12,7 @@ S = TypeVar('S')
 
 
 class SolutionListOutput(Generic[S]):
+
     @staticmethod
     def plot_scatter_to_file(solution_list: List[S], file_name, output_format: str, dpi: int,
                              plot_title="Pareto frontier"):

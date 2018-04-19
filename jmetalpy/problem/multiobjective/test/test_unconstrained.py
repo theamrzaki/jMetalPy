@@ -134,11 +134,11 @@ class SchafferTestCases(unittest.TestCase):
         problem.evaluate(solution1)
         problem.evaluate(solution2)
 
-        self.assertAlmostEqual(solution1.objectives[0], 9);
-        self.assertAlmostEqual(solution1.objectives[1], 1);
+        self.assertAlmostEqual(solution1.objectives[0], 9)
+        self.assertAlmostEqual(solution1.objectives[1], 1)
 
-        self.assertAlmostEqual(solution2.objectives[0], 6.76);
-        self.assertAlmostEqual(solution2.objectives[1], 21.16);
+        self.assertAlmostEqual(solution2.objectives[0], 6.76)
+        self.assertAlmostEqual(solution2.objectives[1], 21.16)
 
     def test_should_get_name_return_the_right_name(self):
         problem = Schaffer()
