@@ -1,14 +1,17 @@
+<p align="center">
+  <br/>
+  <img src=resources/jmetalpy.png alt="jMetalPy">
+  <br/>
+</p>
+
 # jMetalPy: Python version of the jMetal framework
 [![Build Status](https://travis-ci.org/jMetal/jMetalPy.svg?branch=master)](https://travis-ci.org/jMetal/jMetalPy)
 [![PyPI](https://img.shields.io/pypi/l/jMetalPy.svg)]()
 [![PyPI](https://img.shields.io/pypi/v/jMetalPy.svg)]()
 
 > jMetalPy is currently under heavy development!  
-> Any ideas about how the structure the project, coding style, useful tools (I'm using PyCharm), or links to related projects are welcome (see [CONTRIBUTING](https://github.com/jMetal/jMetalPy/blob/master/CONTRIBUTING.md)). The starting point is the jMetal architecture:
-
+> Any ideas about how the structure the project, coding style, useful tools or links to related projects are welcome (see [CONTRIBUTING](https://github.com/jMetal/jMetalPy/blob/master/CONTRIBUTING.md)). The starting point is the jMetal architecture:
 > ![jMetal architecture](resources/jMetal5UML.png)
-
----
 
 # Table of Contents
 - [Installation](#installation)

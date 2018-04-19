@@ -1,7 +1,7 @@
 # ToDo list
 
-- Experiment class
-- Implement SMPSO algorithm
-- Implement parallelism (see: [SCOOP](http://scoop.readthedocs.io), [Dask](https://dask.pydata.org/en/latest/))
-- Merge two or more initial populations
-- Auto-generate documentation
+- Add _experiment_ class with options to export results in LaTeX.
+- Finish implementation of SMPSO algorithm.
+- Add parallelism (see: [Dask](https://dask.pydata.org/en/latest/)).
+- Auto-generate documentation.
+- Add new _state-of-the-art_ visualization methods. 
