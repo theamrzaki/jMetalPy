@@ -1,7 +1,7 @@
 import copy
 import unittest
 
-from jmetal.core.solution import BinarySolution, FloatSolution, Solution, IntegerSolution
+from jmetalpy.core.solution import BinarySolution, FloatSolution, Solution, IntegerSolution
 
 __author__ = "Antonio J. Nebro"
 
@@ -12,23 +12,23 @@ class SolutionTestCase(unittest.TestCase):
         pass
 
     def test_should_constructor_create_a_non_null_object(self) -> None:
-        solution = Solution[int](3, 2)
+        solution = Solution(3, 2)
         self.assertIsNotNone(solution)
 
     def test_should_constructor_create_a_valid_solution_of_ints(self) -> None:
-        solution = Solution[int](3, 2)
+        solution = Solution(3, 2)
         self.assertEqual(3, solution.number_of_variables)
         self.assertEqual(2, solution.number_of_objectives)
         self.assertEqual(0, solution.number_of_constraints)
 
     def test_should_constructor_create_a_valid_solution_of_floats(self) -> None:
-        solution = Solution[float](3, 2, 5)
+        solution = Solution(3, 2, 5)
         self.assertEqual(3, solution.number_of_variables)
         self.assertEqual(2, solution.number_of_objectives)
         self.assertEqual(5, solution.number_of_constraints)
 
     def test_should_constructor_create_a_non_null_objective_list(self) -> None:
-        solution = Solution[float](3, 2)
+        solution = Solution(3, 2)
         self.assertIsNotNone(solution.objectives)
 
 

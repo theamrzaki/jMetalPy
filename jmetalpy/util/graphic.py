@@ -3,7 +3,7 @@ from typing import TypeVar, List, Tuple
 
 import matplotlib.pyplot as plt
 
-from jmetal.core.solution import Solution
+from jmetalpy.core.solution import Solution
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
