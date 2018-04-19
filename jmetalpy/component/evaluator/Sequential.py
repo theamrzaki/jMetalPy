@@ -3,7 +3,6 @@ from queue import Queue
 from typing import TypeVar
 
 from jmetalpy.core.population import Population
-from jmetalpy.core.problem import Problem
 from jmetalpy.core.evaluator import Evaluator
 
 S = TypeVar('S')
@@ -24,8 +23,8 @@ class Sequential(Evaluator):
 
         try:
             self.buffer.put(population)
-        except:
-            pass
+        except Exception as ex:
+            print("SEQUENTIAL EVALUATION buffer ex: " + str(ex))
 
     def apply(self, population: Population):
         problem = population.problem
@@ -34,11 +33,12 @@ class Sequential(Evaluator):
             logger.info("SEQUENTIAL_EVALUATION: APPLY invoked")
 
             if population.mating_pool is None:
-                map(problem.evaluate, population)
+                for solution in population:
+                    Evaluator.evaluate_solution(solution, problem)
                 logger.info("SequentialEvaluation: POPULATION EVALUATED")
             else:
-                offspring = population.mating_pool
-                map(problem.evaluate, offspring)
+                for solution in population.mating_pool:
+                    Evaluator.evaluate_solution(solution, problem)
                 logger.info("SequentialEvaluation: OFFSPRING POPULATION EVALUATED")
 
             population.evaluations = population.evaluations + len(population)
@@ -59,6 +59,6 @@ class Sequential(Evaluator):
                 if population.is_terminated:
                     break
         except Exception as ex:
-            print("SEQUENTIAL EVALUATION: " + str(ex))
+            print("SEQUENTIAL EVALUATION ex: " + str(ex))
 
         logger.info("SEQUENTIAL EVALUATION OBSERVER: END RUN")

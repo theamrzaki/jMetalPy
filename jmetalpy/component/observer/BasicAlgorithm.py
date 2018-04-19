@@ -7,13 +7,14 @@ logger = logging.getLogger(__name__)
 
 
 class BasicAlgorithm(Observer):
-    def __init__(self, frequency: float = 1.0) -> None:
+
+    def __init__(self, frequency: float = 1.0):
+        super(BasicAlgorithm, self).__init__()
         self.display_frequency = frequency
 
     def update(self, *args, **kwargs):
-        evaluations = kwargs["evaluations"]
+        population = kwargs["POPULATION"]
 
-        if (evaluations % self.display_frequency) == 0:
-            logger.info("Evaluations: " + str(evaluations) +
-                        ". Best fitness: " + str(kwargs["population"][0].objectives) +
-                        ". Computing time: " + str(kwargs["computing time"]))
+        if (population.evaluations % self.display_frequency) == 0:
+            print("Evaluations: " + str(population.evaluations) +
+                  ". Best fitness: " + str(population[0].objectives))

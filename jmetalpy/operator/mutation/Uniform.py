@@ -5,6 +5,7 @@ from jmetalpy.core.solution import FloatSolution
 
 
 class Uniform(Mutation):
+
     def __init__(self, probability: float, perturbation: float = 0.5):
         super(Uniform, self).__init__(probability=probability)
         self.perturbation = perturbation

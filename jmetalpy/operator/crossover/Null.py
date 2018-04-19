@@ -6,6 +6,7 @@ from jmetalpy.core.solution import Solution
 
 
 class Null(Crossover):
+
     def __init__(self):
         super(Null, self).__init__(probability=0)
 

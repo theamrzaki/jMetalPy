@@ -8,10 +8,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class ByEvaluations(Terminator):
+class ByEval(Terminator):
 
     def __init__(self, max_evaluations: int = 1500):
-        super(ByEvaluations, self).__init__()
+        super(ByEval, self).__init__()
         self.buffer = Queue()
         self.max_evaluations = max_evaluations
 
@@ -22,7 +22,7 @@ class ByEvaluations(Terminator):
         try:
             self.buffer.put(population)
         except Exception as ex:
-            print("TERMINATION: " + str(ex))
+            print("TERMINATION buffer ex: " + str(ex))
 
     def apply(self, population: Population):
         evaluations = population.evaluations
@@ -33,6 +33,7 @@ class ByEvaluations(Terminator):
             population.is_terminated = True
             logger.info("TERMINATION. ALGORITHM TERMINATED")
         else:
+            population.is_terminated = False
             logger.info("EVALUATIONS: " + str(evaluations))
 
         observable_data = {'POPULATION': population}
@@ -50,6 +51,6 @@ class ByEvaluations(Terminator):
                 if population.is_terminated:
                     break
         except Exception as ex:
-            print("TERMINATION: " + str(ex))
+            print("TERMINATION ex: " + str(ex))
 
         logger.info("TERMINATION: END RUN")

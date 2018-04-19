@@ -1,4 +1,3 @@
-from queue import Queue
 import logging
 import copy
 import random
@@ -15,17 +14,7 @@ class SBX(Crossover):
 
     def __init__(self, probability: float, distribution_index: float = 20.0):
         super(SBX, self).__init__(probability=probability)
-        self.buffer = Queue()
         self.distribution_index = distribution_index
-
-    def update(self, *args, **kwargs):
-        logger.info("CROSSOVER update invoked")
-        population = kwargs['POPULATION']
-
-        try:
-            self.buffer.put(population)
-        except Exception as ex:
-            print("CROSSOVER: " + str(ex))
 
     def execute(self, parents: Population) -> Population:
         if len(parents) != 2:
@@ -90,30 +79,6 @@ class SBX(Crossover):
                     offspring[1].variables[i] = value_x2
 
         return offspring
-
-    def apply(self, population: Population):
-        if not population.is_terminated:
-            logger.info("CROSSOVER: APPLY invoked")
-            pass
-
-        observable_data = {'POPULATION': population}
-        self.notify_all(**observable_data)
-
-    def run(self):
-        logger.info("CROSSOVER: RUN")
-
-        try:
-            while True:
-                population = self.buffer.get()
-                logger.info("CROSSOVER: GET READY")
-                self.apply(population)
-
-                if population.is_terminated:
-                    break
-        except Exception as ex:
-            print("CROSSOVER: " + str(ex))
-
-        logger.info("CROSSOVER: END RUN")
 
     def get_number_of_parents(self):
         return 2

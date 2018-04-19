@@ -9,7 +9,9 @@ logger = logging.getLogger(__name__)
 
 
 class WriteFrontToFile(Observer):
-    def __init__(self, output_directory) -> None:
+
+    def __init__(self, output_directory):
+        super(WriteFrontToFile, self).__init__()
         self.counter = 0
         self.directory = output_directory
 
@@ -23,6 +25,6 @@ class WriteFrontToFile(Observer):
 
     def update(self, *args, **kwargs):
         SolutionListOutput.print_function_values_to_file(
-            self.directory + "/FUN." + str(self.counter), kwargs["population"])
+            self.directory + "/FUN." + str(self.counter), kwargs["POPULATION"])
 
         self.counter += 1

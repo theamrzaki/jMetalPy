@@ -7,6 +7,7 @@ from jmetalpy.core.solution import BinarySolution
 
 
 class SinglePoint(Crossover):
+
     def __init__(self, probability: float):
         super(SinglePoint, self).__init__(probability=probability)
 

@@ -8,15 +8,11 @@ logger = logging.getLogger(__name__)
 
 
 class ParetoPlot(Observer):
-    def __init__(self, animation_speed: float, frequency: float = 1.0) -> None:
-        self.animation_speed = animation_speed
-        self.display_frequency = frequency
+    def __init__(self):
+        super(ParetoPlot, self).__init__()
 
     def update(self, *args, **kwargs):
-        evaluations = kwargs["evaluations"]
-        population = kwargs["population"]
-        computing_time = kwargs["computing time"]
+        population = kwargs["POPULATION"]
 
-        if (evaluations % self.display_frequency) == 0:
-            SolutionListOutput.plot_scatter_real_time(population, evaluations, computing_time,
-                                                      self.animation_speed)
+        if population.is_terminated:
+            SolutionListOutput.plot_scatter_to_screen(population)

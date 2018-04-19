@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class BinaryTournament(Selection):
+
     def __init__(self, comparator: Comparator = Dominance()):
         super(BinaryTournament, self).__init__()
         self.buffer = Queue()
@@ -28,7 +29,7 @@ class BinaryTournament(Selection):
         try:
             self.buffer.put(population)
         except Exception as ex:
-            print("SELECTION: " + str(ex))
+            print("SELECTION buffer ex: " + str(ex))
 
     def execute(self, solution_list: Population):
         if solution_list is None:
@@ -56,10 +57,9 @@ class BinaryTournament(Selection):
 
     def apply(self, population: Population):
         if not population.is_terminated:
-
             logger.info("SELECTION: APPLY invoked")
 
-            new_population = copy(population)
+            new_population = Population()
             while len(new_population) < len(population):
                 new_population.append(self.execute(population))
 
@@ -80,6 +80,6 @@ class BinaryTournament(Selection):
                 if population.is_terminated:
                     break
         except Exception as ex:
-            print("SELECTION: " + str(ex))
+            print("SELECTION ex: " + str(ex))
 
         logger.info("SELECTION: END RUN")

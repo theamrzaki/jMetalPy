@@ -3,19 +3,18 @@ from typing import List, TypeVar
 
 from jmetalpy.core.operator import Selection
 from jmetalpy.core.comparator import Comparator
+from jmetalpy.core.population import Population
 
 S = TypeVar('S')
 
 
 class BinaryTournament2(Selection):
+
     def __init__(self, comparator_list: List[Comparator]):
         super().__init__()
         self.comparator_list = comparator_list
 
-    def get_name(self):
-        return "Binary tournament selection (experimental)"
-
-    def execute(self, solution_list: List[S]) -> S:
+    def execute(self, solution_list: Population) -> S:
         if solution_list is None:
             raise Exception("The solution list is null")
         elif len(solution_list) == 0:
@@ -39,7 +38,7 @@ class BinaryTournament2(Selection):
 
         return winner
 
-    def __winner(self, solution_list: List[S], comparator: Comparator):
+    def __winner(self, solution_list: Population, comparator: Comparator):
         i, j = random.sample(range(0, len(solution_list)), 2)  # sampling without replacement
         solution1 = solution_list[i]
         solution2 = solution_list[j]
@@ -54,3 +53,6 @@ class BinaryTournament2(Selection):
             result = None
 
         return result
+
+    def get_name(self):
+        return "Binary tournament selection (experimental)"

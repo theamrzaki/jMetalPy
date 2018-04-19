@@ -5,6 +5,7 @@ from jmetalpy.core.solution import IntegerSolution
 
 
 class IntegerPolynomial(Mutation):
+
     def __init__(self, probability: float, distribution_index: float = 0.20):
         super(IntegerPolynomial, self).__init__(probability=probability)
         self.distribution_index = distribution_index

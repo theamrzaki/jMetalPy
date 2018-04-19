@@ -5,6 +5,7 @@ from jmetalpy.core.solution import FloatSolution
 
 
 class SimpleRandom(Mutation):
+
     def __init__(self, probability: float):
         super(SimpleRandom, self).__init__(probability=probability)
 

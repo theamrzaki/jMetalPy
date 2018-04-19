@@ -1,21 +1,23 @@
-from typing import List, TypeVar
+from typing import TypeVar
 
 from jmetalpy.component.density_estimator import DensityCrowdingDistance
 from jmetalpy.core.operator import Selection
-from jmetalpy.core.ranking import FastNonDominatedRanking
+from jmetalpy.core.population import Population
+from jmetalpy.component.ranking import FastNonDominated
 
 S = TypeVar('S')
 
 
-class RankingAndCrowdingDistanceSelection(Selection):
+class RankingAndCrowdingDistance(Selection):
+
     def __init__(self, max_population_size: int):
         super().__init__()
         self.max_population_size = max_population_size
 
-    def execute(self, solution_list: List[S]) -> List[S]:
-        ranking = FastNonDominatedRanking()
+    def execute(self, population: Population) -> Population:
+        ranking = FastNonDominated()
         crowding_distance = DensityCrowdingDistance()
-        ranking.compute_ranking(solution_list)
+        ranking.compute_ranking(population)
 
         ranking_index = 0
         new_solution_list = []

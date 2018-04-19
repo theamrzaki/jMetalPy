@@ -22,7 +22,7 @@ class Operator(DefaultObservable, Observer):
         pass
 
 
-class Mutation(Operator):
+class Mutation:
 
     def __init__(self, probability: float):
         super(Mutation, self).__init__()
@@ -37,7 +37,7 @@ class Mutation(Operator):
         pass
 
 
-class Crossover(Operator):
+class Crossover:
 
     def __init__(self, probability: float):
         super(Crossover, self).__init__()
@@ -59,6 +59,15 @@ class Selection(Operator):
 
     def __init__(self):
         super(Selection, self).__init__()
+
+    def execute(self, source: S) -> R:
+        pass
+
+
+class Replacement(Operator):
+
+    def __init__(self):
+        super(Replacement, self).__init__()
 
     def execute(self, source: S) -> R:
         pass

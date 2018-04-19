@@ -39,6 +39,6 @@ class RandomInitialCreation(DefaultObservable):
         try:
             self.buffer.get()
         except Exception as ex:
-            print("RANDOM POPULATION: " + str(ex))
+            print("RANDOM POPULATION ex: " + str(ex))
 
         logger.info("RANDOM POPULATION CREATOR OBSERVER: END RUN")

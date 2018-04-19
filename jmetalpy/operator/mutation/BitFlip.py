@@ -5,6 +5,7 @@ from jmetalpy.core.solution import BinarySolution
 
 
 class BitFlip(Mutation):
+
     def __init__(self, probability: float):
         super(BitFlip, self).__init__(probability=probability)
 
