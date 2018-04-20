@@ -1,7 +1,7 @@
 import logging
 from typing import TypeVar
 
-from jmetalpy.component.population import RandomInitialCreation
+from jmetalpy.component.population import RandomInitialPopulation
 from jmetalpy.core.algorithm import Algorithm
 from jmetalpy.core.evaluator import Evaluator
 from jmetalpy.core.operator import Selection, Replacement, Operator
@@ -18,9 +18,14 @@ logger = logging.getLogger(__name__)
 
 class NSGAII(Algorithm):
 
-    def __init__(self, problem: Problem,
-                 initial_population: RandomInitialCreation, variation: Operator, selection: Selection,
-                 replacement: Replacement, evaluator: Evaluator, offspring_evaluator: Evaluator,
+    def __init__(self,
+                 problem: Problem,
+                 initial_population: RandomInitialPopulation,
+                 variation: Operator,
+                 selection: Selection,
+                 replacement: Replacement,
+                 evaluator: Evaluator,
+                 offspring_evaluator: Evaluator,
                  terminator: Terminator):
         super().__init__()
         self.problem = problem

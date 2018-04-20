@@ -1,7 +1,7 @@
 import logging
 
-from jmetalpy.component.observer import BasicAlgorithm, ParetoPlot
-from jmetalpy.component.population import RandomInitialCreation
+from jmetalpy.component.observer import BasicAlgorithm, ParetoPlot, RealTimeParetoPlot
+from jmetalpy.component.population import RandomInitialPopulation
 from jmetalpy.component.variation.CrossoverAndMutation import CrossoverAndMutation
 from jmetalpy.component.evaluator import Sequential
 from jmetalpy.component.comparator import RankingAndCrowdingDistance
@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 def main() -> None:
     # component creation
     problem = ZDT1()
-    initial_population = RandomInitialCreation(population_size=100)
+    initial_population = RandomInitialPopulation(population_size=100)
     mutation = Polynomial(1.0/problem.number_of_variables, distribution_index=20.0)
     crossover = SBX(0.9, distribution_index=30.0)
     variation = CrossoverAndMutation(crossover=crossover, mutation=mutation, offspring_population_size=100)
@@ -32,6 +32,7 @@ def main() -> None:
 
     # register observers
     variation.register(BasicAlgorithm())
+    terminator.register(RealTimeParetoPlot())
     terminator.register(ParetoPlot())  # will only trigger when the algorithm has finished
 
     # set up algorithm

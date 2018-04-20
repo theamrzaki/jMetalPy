@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class RealTimeParetoPlot(Observer):
 
-    def __init__(self, animation_speed: float, frequency: float = 1.0):
+    def __init__(self, animation_speed: float = 0.0001, frequency: float = 1.0):
         super(RealTimeParetoPlot, self).__init__()
         self.animation_speed = animation_speed
         self.display_frequency = frequency
