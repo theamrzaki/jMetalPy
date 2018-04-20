@@ -9,10 +9,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class RandomInitialCreation(DefaultObservable):
+class RandomInitialPopulation(DefaultObservable):
 
     def __init__(self, population_size: int):
-        super(RandomInitialCreation, self).__init__()
+        super(RandomInitialPopulation, self).__init__()
         self.buffer = Queue()
         self.population_size = population_size
 
