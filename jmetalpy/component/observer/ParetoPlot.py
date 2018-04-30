@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class ParetoPlot(Observer):
+
     def __init__(self):
         super(ParetoPlot, self).__init__()
 
@@ -15,4 +16,4 @@ class ParetoPlot(Observer):
         population = kwargs["POPULATION"]
 
         if population.is_terminated:
-            SolutionListOutput.plot_scatter_to_screen(population)
+            SolutionListOutput.plot_scatter_to_file(population)

@@ -14,7 +14,9 @@ S = TypeVar('S')
 class SolutionListOutput(Generic[S]):
 
     @staticmethod
-    def plot_scatter_to_file(solution_list: List[S], file_name, output_format: str, dpi: int,
+    def plot_scatter_to_file(solution_list: List[S],
+                             file_name = "JMETALPY_PARETO_FRONT",
+                             output_format: str = "jpg", dpi: int = 600,
                              plot_title="Pareto frontier"):
         """ Plot non-dominated solutions. For problems with TWO variables.
         """
