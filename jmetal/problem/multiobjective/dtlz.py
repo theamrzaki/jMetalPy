@@ -227,3 +227,51 @@ class DTLZ5(FloatProblem):
 
     def get_name(self):
         return "DTLZ5"
+
+
+class DTLZ6(FloatProblem):
+    """ Problem DTLZ6
+    .. note:: Unconstrained problem. The default number of variables and objectives are, respectively, 12 and 3.
+    .. note:: Continuous problem having a convex Pareto front
+    """
+
+    def __init__(self, number_of_variables: int = 12, number_of_objectives = 3):
+        """Constructor
+        :param number_of_variables: number of decision variables of the problem
+        """
+        self.number_of_variables = number_of_variables
+        self.number_of_objectives = number_of_objectives
+        self.number_of_constraints = 0
+
+        self.lower_bound = self.number_of_variables * [0.0]
+        self.upper_bound = self.number_of_variables * [1.0]
+
+        FloatSolution.lower_bound = self.lower_bound
+        FloatSolution.upper_bound = self.upper_bound
+
+    def evaluate(self, solution: FloatSolution):
+        g = 0.0
+        k = self.number_of_variables - self.number_of_objectives + 1
+
+        for i in range (self.number_of_variables - k, self.number_of_variables):
+            g += pow(solution.variables[i], 0.1)
+
+        t = pi /(4.0 * (1.0 + g))
+        theta = [] * (self.number_of_objectives - 1)
+        theta[0] = solution.variables[0] * pi / 2.0
+
+        for i in range(self.number_of_objectives - 1):
+            theta[i] = t * (1.0 + 2.0 * g * solution.objectives[i])
+
+        for i in range(self.number_of_objectives):
+            solution.objectives[i] = 1.0 + g
+
+        for i in range(self.number_of_objectives):
+            for j in range(self.number_of_objectives - (i + 1)):
+                solution.objectives[i] *= cos(theta[j])
+            if i != 0:
+                aux = self.number_of_objectives - (i + 1)
+                solution.objectives[i] *= sin(theta[aux])
+
+    def get_name(self):
+        return "DTLZ6"
