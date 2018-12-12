@@ -3,6 +3,7 @@ from abc import ABCMeta, abstractmethod
 from typing import Generic, TypeVar, List
 import random
 
+from jmetal.core.observable import Observable, DefaultObservable
 from jmetal.core.solution import BinarySolution, FloatSolution, IntegerSolution
 
 LOGGER = logging.getLogger('jmetal')
@@ -127,4 +128,20 @@ class IntegerProblem(Problem[IntegerSolution]):
 
     @abstractmethod
     def get_name(self) -> str:
+        pass
+
+
+class DynamicProblem(Problem[S]):
+
+    __metaclass__ = ABCMeta
+
+    def __init(self):
+        self.observable = DefaultObservable()
+
+    @abstractmethod
+    def the_problem_has_changed(self) -> bool:
+        pass
+
+    @abstractmethod
+    def reset(self) -> None:
         pass

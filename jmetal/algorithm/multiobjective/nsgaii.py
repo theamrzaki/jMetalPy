@@ -5,7 +5,7 @@ from jmetal.component import DominanceComparator
 from jmetal.component.evaluator import Evaluator
 from jmetal.component.generator import Generator
 from jmetal.core.operator import Mutation, Crossover, Selection
-from jmetal.core.problem import Problem
+from jmetal.core.problem import Problem, DynamicProblem
 from jmetal.operator import RankingAndCrowdingDistanceSelection
 from jmetal.util.termination_criteria import TerminationCriteria
 
@@ -83,3 +83,37 @@ class NSGAII(GeneticAlgorithm):
 
     def get_name(self) -> str:
         return 'NSGAII'
+
+
+class DynamicNSGAII(NSGAII):
+    def __init__(self,
+                 problem: DynamicProblem,
+                 population_size: int,
+                 offspring_size: int,
+                 mating_pool_size: int,
+                 mutation: Mutation,
+                 crossover: Crossover,
+                 selection: Selection,
+                 termination_criteria: TerminationCriteria,
+                 pop_generator: Generator = None,
+                 pop_evaluator: Evaluator = None,
+                 dominance_comparator: DominanceComparator = DominanceComparator()):
+        super(DynamicNSGAII, self).__init(
+            problem=problem,
+            population_size=population_size,
+            offspring_size=offspring_size,
+            mating_pool_size=mating_pool_size,
+            mutation=mutation,
+            crossover=crossover,
+            selection=selection,
+            pop_evaluator=pop_evaluator,
+            pop_generator=pop_generator,
+            termination_criteria=termination_criteria,
+            dominance_comparator=dominance_comparator)
+
+    def update_progress(self):
+        super(NSGAII, self).update_progress()
+        if self.problem.the_problem_has_changed():
+            print("DNSGA-II: the problem has changed")
+            self.problem.reset()
+

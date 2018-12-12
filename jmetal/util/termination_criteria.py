@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 from jmetal.component.quality_indicator import QualityIndicator
-from jmetal.util.observable import Observer
+from jmetal.core.observable import Observer
 
 """
 .. module:: termination_criteria
@@ -79,3 +79,16 @@ class StoppingByQualityIndicator(TerminationCriteria):
             met = self.value * self.degree > self.expected_value
 
         return met
+
+
+class Endless(TerminationCriteria):
+
+    def __init(self):
+        super(Endless, self).__init__()
+
+    def update(self, *args, **kwargs):
+        pass
+
+    @property
+    def is_met(self):
+        return False

@@ -1,4 +1,5 @@
-from jmetal.component import SequentialEvaluator, RandomGenerator, DefaultObservable
+from jmetal.component import SequentialEvaluator, RandomGenerator
+from jmetal.core.observable import DefaultObservable
 from jmetal.util.termination_criteria import StoppingByEvaluations
 
 

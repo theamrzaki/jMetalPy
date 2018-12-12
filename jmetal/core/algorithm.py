@@ -1,7 +1,7 @@
 import logging
 import threading
 import time
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod, ABC
 from typing import TypeVar, Generic, List
 
 from jmetal.component.evaluator import Evaluator
@@ -108,6 +108,21 @@ class Algorithm(Generic[S, R], threading.Thread):
 
     @abstractmethod
     def get_name(self) -> str:
+        pass
+
+
+class DynamicAlgorithm(Algorithm[S,R], ABC):
+    __metaclass__ = ABCMeta
+
+    def __init__(self,
+                 problem: Problem[S],
+                 pop_generator: Generator[R],
+                 pop_evaluator: Evaluator[S],
+                 termination_criteria: TerminationCriteria):
+        super(DynamicAlgorithm, self).__init__(problem, pop_generator, pop_evaluator, termination_criteria)
+
+    @abstractmethod
+    def restart(self) -> None:
         pass
 
 
