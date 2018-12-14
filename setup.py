@@ -30,6 +30,7 @@ setup(
         'plotly==3.3.0',
         'matplotlib==3.0.2',
         'dask==1.0.0',
+        'pyspark==2.4.0',
         'statsmodels'
     ],
     tests_require=[
