@@ -1,5 +1,11 @@
-from typing import TypeVar, List
+from typing import TypeVar, List, Generic
 
+import time
+
+from dask.distributed import Client, as_completed
+
+from jmetal import logger
+from jmetal.config import store
 from jmetal.algorithm.singleobjective.genetic_algorithm import GeneticAlgorithm
 from jmetal.component import DominanceComparator
 from jmetal.component.evaluator import Evaluator
@@ -83,3 +89,122 @@ class NSGAII(GeneticAlgorithm):
 
     def get_name(self) -> str:
         return 'NSGAII'
+
+
+class DistributedNSGAII(Generic[S, R]):
+
+    def __init__(self,
+                 population_size: int,
+                 problem: Problem[S],
+                 max_evaluations: int,
+                 mutation: Mutation[S],
+                 crossover: Crossover[S, S],
+                 selection: Selection[List[S], S],
+                 number_of_cores: int,
+                 client: Client):
+        super().__init__()
+        self.problem = problem
+        self.max_evaluations = max_evaluations
+        self.mutation_operator = mutation
+        self.crossover_operator = crossover
+        self.selection_operator = selection
+
+        self.population_size = population_size
+        self.number_of_cores = number_of_cores
+        self.client = client
+        self.observable = store.default_observable
+        self.evaluations = 0
+
+    def update_progress(self, population):
+        observable_data = {'EVALUATIONS': self.evaluations,
+                           'COMPUTING_TIME': time.time() - self.start_computing_time,
+                           'SOLUTIONS': population,
+                           'reference_front': self.problem.reference_front}
+
+        self.observable.notify_all(**observable_data)
+
+    def create_initial_population(self) -> List[S]:
+        population = []
+
+        for _ in range(self.number_of_cores):
+            population.append(self.problem.create_solution())
+
+        return population
+
+    def run(self):
+        population = self.create_initial_population()
+
+        self.start_computing_time = time.time()
+
+        futures = []
+        for solution in population:
+            futures.append(self.client.submit(self.problem.evaluate, solution))
+
+        task_pool = as_completed(futures)
+
+        # MAIN LOOP
+        while self.evaluations < self.max_evaluations:
+            for future in task_pool:
+                self.evaluations += 1
+                # The initial population is not full
+                if len(population) < self.population_size:
+                    received_solution = future.result()
+                    population.append(received_solution)
+
+                    new_task = self.client.submit(self.problem.evaluate, self.problem.create_solution())
+                    task_pool.add(new_task)
+                # Perform an algorithm step to create a new solution to be evaluated
+                else:
+                    offspring_population = []
+                    if self.evaluations < self.max_evaluations:
+                        offspring_population.append(future.result())
+
+                        # Replacement
+                        join_population = population + offspring_population
+                        self.check_population(join_population)
+                        population = RankingAndCrowdingDistanceSelection(self.population_size).execute(join_population)
+
+                        # Selection
+                        mating_population = []
+                        for _ in range(2):
+                            solution = self.selection_operator.execute(population)
+                            mating_population.append(solution)
+
+                        # Reproduction
+                        offspring = self.crossover_operator.execute(mating_population)
+                        self.mutation_operator.execute(offspring[0])
+
+                        solution_to_evaluate = offspring[0]
+
+                        # Evaluation
+                        new_task = self.client.submit(self.problem.evaluate, solution_to_evaluate)
+                        task_pool.add(new_task)
+
+                self.evaluations += 1
+
+                if self.evaluations % 10 == 0:
+                    self.update_progress(population)
+                    #logger.info("PopSize: " + str(len(population)) + ". Evals: " + str(self.evaluations))
+
+        self.total_computing_time = time.time() - self.start_computing_time
+        self.population = population
+
+    def check_population(self, join_population: []):
+        for solution in join_population:
+            if solution is None:
+                raise Exception('Solution is none')
+
+    def get_result(self) -> R:
+        return self.population
+
+    def get_name(self) -> str:
+        return 'Dynamic Non-dominated Sorting Genetic Algorithm II'
+
+
+def reproduction(mating_population: List[S], problem, crossover_operator, mutation_operator) -> S:
+    offspring = crossover_operator.execute(mating_population)
+
+    # todo Este operador podría ser el causante del problema "Minimum and maximum are the same!"
+    offspring = mutation_operator.execute(offspring[0])
+
+    return problem.evaluate(offspring)
