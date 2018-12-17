@@ -198,7 +198,7 @@ class DistributedNSGAII(Generic[S, R]):
                     self.update_progress(population_to_evaluate)
 
         self.total_computing_time = time.time() - self.start_computing_time
-        self.population = population_to_evaluate
+        self.population = population
 
     #def check_population(self, join_population: []):
     #    for solution in join_population:
