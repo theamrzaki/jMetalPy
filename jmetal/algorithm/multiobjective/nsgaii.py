@@ -136,16 +136,17 @@ class DistributedNSGAII(Generic[S, R]):
         return population
 
     def run(self):
-        population = self.create_initial_population()
+        population_to_evaluate = self.create_initial_population()
 
         self.start_computing_time = time.time()
 
         futures = []
-        for solution in population:
+        for solution in population_to_evaluate:
             futures.append(self.client.submit(self.problem.evaluate, solution))
 
         task_pool = as_completed(futures)
 
+        population = []
         # MAIN LOOP
         while self.evaluations < self.max_evaluations:
             for future in task_pool:
@@ -165,13 +166,13 @@ class DistributedNSGAII(Generic[S, R]):
 
                         # Replacement
                         join_population = population + offspring_population
-                        self.check_population(join_population)
+                        #self.check_population(join_population)
                         population = RankingAndCrowdingDistanceSelection(self.population_size).execute(join_population)
 
                         # Selection
                         mating_population = []
                         for _ in range(2):
-                            solution = self.selection_operator.execute(population)
+                            solution = self.selection_operator.execute(population_to_evaluate)
                             mating_population.append(solution)
 
                         # Reproduction
@@ -190,15 +191,15 @@ class DistributedNSGAII(Generic[S, R]):
                 self.evaluations += 1
 
                 if self.evaluations % 10 == 0:
-                    self.update_progress(population)
+                    self.update_progress(population_to_evaluate)
 
         self.total_computing_time = time.time() - self.start_computing_time
-        self.population = population
+        self.population = population_to_evaluate
 
-    def check_population(self, join_population: []):
-        for solution in join_population:
-            if solution is None:
-                raise Exception('Solution is none')
+    #def check_population(self, join_population: []):
+    #    for solution in join_population:
+    #        if solution is None:
+    #            raise Exception('Solution is none')
 
     def get_result(self) -> R:
         return self.population

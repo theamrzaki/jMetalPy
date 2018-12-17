@@ -12,18 +12,17 @@ from jmetal.operator import Polynomial, SBX, BinaryTournamentSelection
 from jmetal.util.solution_list import print_function_values_to_file
 
 
-class ZDT11(FloatProblem):
+class ZDT1Modified(FloatProblem):
     """ Problem ZDT1.
 
-    .. note:: Bi-objective unconstrained problem. The default number of variables is 30.
-    .. note:: Continuous problem having a convex Pareto front
+    .. note:: Version including a loop for increasing the computing time of the evaluation functions.
     """
 
     def __init__(self, number_of_variables: int=30):
         """ :param number_of_variables: Number of decision variables of the problem.
         :param rf_path: Path to the reference front file (if any). Default to None.
         """
-        super(ZDT11, self).__init__()
+        super(ZDT1Modified, self).__init__()
         self.number_of_variables = number_of_variables
         self.number_of_objectives = 2
         self.number_of_constraints = 0
@@ -64,7 +63,7 @@ class ZDT11(FloatProblem):
 
 
 if __name__ == '__main__':
-    problem = ZDT11()
+    problem = ZDT1Modified()
 
     dask.config.set(scheduler='threads', pool=ThreadPool(8))
     client = Client()
@@ -76,7 +75,7 @@ if __name__ == '__main__':
         mutation=Polynomial(probability=1.0 / problem.number_of_variables, distribution_index=20),
         crossover=SBX(probability=1.0, distribution_index=20),
         selection=BinaryTournamentSelection(comparator=RankingAndCrowdingDistanceComparator()),
-        number_of_cores=8,
+        number_of_cores=20,
         client=client
     )
 
