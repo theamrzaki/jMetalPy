@@ -56,3 +56,5 @@ class SparkEvaluator(Evaluator[S]):
         return solutions_to_evaluate\
             .map(lambda s: problem.evaluate(s))\
             .collect()
+
+
