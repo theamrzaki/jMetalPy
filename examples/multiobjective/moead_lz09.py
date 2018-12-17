@@ -4,7 +4,7 @@ from jmetal.operator import Polynomial, DifferentialEvolution
 from jmetal.problem import LZ09_F2
 from jmetal.util.aggregative_function import Chebyshev
 from jmetal.util.neighborhood import WeightVectorNeighborhood
-from jmetal.util.solution_list import read_solutions
+from jmetal.util.solution_list import read_solutions, print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criteria import StoppingByEvaluations
 
 if __name__ == '__main__':
@@ -29,7 +29,9 @@ if __name__ == '__main__':
     progress_bar = ProgressBarObserver(max=175000)
     algorithm.observable.register(observer=progress_bar)
     algorithm.observable.register(observer=VisualizerObserver())
-    algorithm.observable.register(observer=VisualizerObserver())
 
     algorithm.run()
     front = algorithm.get_result()
+
+    print_function_values_to_file(front, 'FUN.MOEAD.LZ09F2')
+    print_variables_to_file(front, 'VAR.MOEAD.LZ09F2')

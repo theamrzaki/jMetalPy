@@ -150,6 +150,7 @@ class DistributedNSGAII(Generic[S, R]):
         # MAIN LOOP
         while self.evaluations < self.max_evaluations:
             for future in task_pool:
+                print("TASK_POOL_SIZE: " + str(len(task_pool.futures)))
                 self.evaluations += 1
                 # The initial population is not full
                 if len(population) < self.population_size:
@@ -186,6 +187,9 @@ class DistributedNSGAII(Generic[S, R]):
                         task_pool.add(new_task)
                     else:
                         print("TIME: " + str(time.time() - self.start_computing_time))
+                        for future in task_pool.futures:
+                            future.cancel()
+
                         break
 
                 self.evaluations += 1
