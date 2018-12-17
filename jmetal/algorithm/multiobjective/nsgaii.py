@@ -10,6 +10,7 @@ from jmetal.algorithm.singleobjective.genetic_algorithm import GeneticAlgorithm
 from jmetal.component import DominanceComparator
 from jmetal.component.evaluator import Evaluator
 from jmetal.component.generator import Generator
+from jmetal.core.algorithm import EvolutionaryAlgorithm
 from jmetal.core.operator import Mutation, Crossover, Selection
 from jmetal.core.problem import Problem
 from jmetal.operator import RankingAndCrowdingDistanceSelection
@@ -109,15 +110,18 @@ class DistributedNSGAII(Generic[S, R]):
         self.crossover_operator = crossover
         self.selection_operator = selection
 
+        self.population = None
         self.population_size = population_size
         self.number_of_cores = number_of_cores
         self.client = client
         self.observable = store.default_observable
         self.evaluations = 0
+        self.start_computing_time = 0
+        self.total_computing_time = 0
 
     def update_progress(self, population):
         observable_data = {'EVALUATIONS': self.evaluations,
-                           'COMPUTING_TIME': time.time() - self.start_computing_time,
+                           'COMPUTING_TIME': self.total_computing_time,
                            'SOLUTIONS': population,
                            'reference_front': self.problem.reference_front}
 
@@ -179,12 +183,14 @@ class DistributedNSGAII(Generic[S, R]):
                         # Evaluation
                         new_task = self.client.submit(self.problem.evaluate, solution_to_evaluate)
                         task_pool.add(new_task)
+                    else:
+                        print("TIME: " + str(time.time() - self.start_computing_time))
+                        break
 
                 self.evaluations += 1
 
                 if self.evaluations % 10 == 0:
                     self.update_progress(population)
-                    #logger.info("PopSize: " + str(len(population)) + ". Evals: " + str(self.evaluations))
 
         self.total_computing_time = time.time() - self.start_computing_time
         self.population = population
@@ -198,13 +204,13 @@ class DistributedNSGAII(Generic[S, R]):
         return self.population
 
     def get_name(self) -> str:
-        return 'Dynamic Non-dominated Sorting Genetic Algorithm II'
+        return 'Distributed Non-dominated Sorting Genetic Algorithm II'
 
 
-def reproduction(mating_population: List[S], problem, crossover_operator, mutation_operator) -> S:
-    offspring = crossover_operator.execute(mating_population)
-
-    # todo Este operador podría ser el causante del problema "Minimum and maximum are the same!"
-    offspring = mutation_operator.execute(offspring[0])
-
-    return problem.evaluate(offspring)
+# def reproduction(mating_population: List[S], problem, crossover_operator, mutation_operator) -> S:
+#     offspring = crossover_operator.execute(mating_population)
+#
+#     # todo Este operador podría ser el causante del problema "Minimum and maximum are the same!"
+#     offspring = mutation_operator.execute(offspring[0])
+#
+#     return problem.evaluate(offspring)

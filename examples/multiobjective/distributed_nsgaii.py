@@ -1,5 +1,7 @@
 from math import sqrt
+from multiprocessing.pool import ThreadPool
 
+import dask
 from dask.distributed import Client
 from jmetal.component import RankingAndCrowdingDistanceComparator, ProgressBarObserver
 
@@ -64,6 +66,7 @@ class ZDT11(FloatProblem):
 if __name__ == '__main__':
     problem = ZDT11()
 
+    dask.config.set(scheduler='threads', pool=ThreadPool(8))
     client = Client()
 
     algorithm = DistributedNSGAII(
