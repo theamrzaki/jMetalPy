@@ -3,6 +3,7 @@ from jmetal.operator import BitFlipMutation, SPXCrossover
 from jmetal.problem.multiobjective.unconstrained import OneZeroMax
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
+from jmetal.operator import BinaryTournamentSelection, BitFlipMutation, SPXCrossover
 
 """  
 Program to  configure and run the NSGA-II algorithm configured to solve a binary problem, OneZeroMax, which is 
@@ -11,15 +12,33 @@ multiobjective version of the ONE_MAX problem where the numbers of 1s and 0s hav
 
 if __name__ == "__main__":
     binary_string_length = 512
-    problem = OneZeroMax(binary_string_length)
+    #problem = OneZeroMax(binary_string_length)
 
-    max_evaluations = 50000
+    import sys
+    sys.path.append("C:\PhD Research\Test\jMetalPy\jmetal")
+    from problem.multiobjective.Knapsack2d import Knapsack2d
+    problem = Knapsack2d(
+        number_of_users = 10,
+        number_of_workers = 4,
+        profits = [[1,2,1,1],
+                   [1,1,2,1],
+                   [1,1,2,1],
+                   [1,1,2,1],
+                   [1,1,2,1],
+                   [1,2,1,1],
+                   [1,1,2,1],
+                   [1,1,2,1],
+                   [1,1,2,1],
+                   [1,1,2,1]]
+    )
+    
+    max_evaluations = 10000
     algorithm = NSGAII(
         problem=problem,
         population_size=100,
         offspring_population_size=100,
-        mutation=BitFlipMutation(probability=1.0 / binary_string_length),
-        crossover=SPXCrossover(probability=1.0),
+        mutation=BitFlipMutation(probability=0.1),
+        crossover=SPXCrossover(probability=0.8),
         termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations),
     )
 
